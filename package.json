@@ -1,0 +1,31 @@
+{
+  "name": "ytdl-mp3",
+  "version": "1.0.0",
+  "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
+  "main": "./src/js/main.js",
+  "scripts": {
+    "browserify": "browserify ./src/js/main.js > ./src/js/bundle.js",
+    "format": "for FILE in ./src/js/*.js; do ./node_modules/.bin/js-beautify -r $FILE; done",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshunrau/ytdl-mp3.git"
+  },
+  "author": "Joshua Unrau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshunrau/ytdl-mp3/issues"
+  },
+  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
+  "bin": {
+    "ytdl_mp3": "./src/js/main.js"
+  },
+  "dependencies": {
+    "browserify": "^17.0.0",
+    "ffmpeg-static": "^4.4.1",
+    "js-beautify": "^1.14.0",
+    "node-id3": "^0.2.3",
+    "ytdl-core": "^4.10.1"
+  }
+}
