@@ -1,0 +1,6 @@
+{
+    "name": "ytdl-mp3",
+    "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
+    "version": "1.0.0",
+    "manifest_version": 3
+  }
