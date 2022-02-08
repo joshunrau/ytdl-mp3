@@ -4,7 +4,7 @@
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
   "main": "./lib/js/main.js",
   "scripts": {
-    "browserify": "browserify ./lib/main.js > ./lib/bundle.js",
+    "build": "./bin/build.sh",
     "format": "./bin/format.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
