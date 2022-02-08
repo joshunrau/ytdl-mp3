@@ -5,10 +5,7 @@
   "main": "./lib/js/main.js",
   "scripts": {
     "browserify": "browserify ./lib/main.js > ./lib/bundle.js",
-    "format-css": "find ./lib -name '*.css' | xargs ./node_modules/.bin/css-beautify -r",
-    "format-html": "find ./lib -name '*.html' | xargs ./node_modules/.bin/html-beautify --r",
-    "format-js": "find ./lib -name '*.js' | xargs ./node_modules/.bin/js-beautify -r",
-    "format": "npm run-script format-css && npm run-script format-html && npm run-script format-js",
+    "format": "./bin/format.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
