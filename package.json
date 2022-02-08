@@ -2,12 +2,12 @@
   "name": "ytdl-mp3",
   "version": "1.0.0",
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
-  "main": "./src/js/main.js",
+  "main": "./lib/js/main.js",
   "scripts": {
-    "browserify": "browserify ./src/main.js > ./src/bundle.js",
-    "format-css": "find ./src -name '*.css' | xargs ./node_modules/.bin/css-beautify -r",
-    "format-html": "find ./src -name '*.html' | xargs ./node_modules/.bin/html-beautify --r",
-    "format-js": "find ./src -name '*.js' | xargs ./node_modules/.bin/js-beautify -r",
+    "browserify": "browserify ./lib/main.js > ./lib/bundle.js",
+    "format-css": "find ./lib -name '*.css' | xargs ./node_modules/.bin/css-beautify -r",
+    "format-html": "find ./lib -name '*.html' | xargs ./node_modules/.bin/html-beautify --r",
+    "format-js": "find ./lib -name '*.js' | xargs ./node_modules/.bin/js-beautify -r",
     "format": "npm run-script format-css && npm run-script format-html && npm run-script format-js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
