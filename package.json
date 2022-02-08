@@ -2,10 +2,10 @@
   "name": "ytdl-mp3",
   "version": "1.0.0",
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
-  "main": "./lib/js/main.js",
+  "main": "./src/js/main.js",
   "scripts": {
-    "build": "./bin/build.sh",
-    "format": "./bin/format.sh",
+    "build": "./scripts/build.sh",
+    "format": "./scripts/format.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

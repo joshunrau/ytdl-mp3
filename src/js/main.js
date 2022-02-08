@@ -68,9 +68,9 @@ function addMetaData(info) {
 
 async function main() {
     let videoInfo = await downloadVideo(url, videoFile);
-    console.log(Object.keys(videoInfo))
-    convertVideoToAudio(videoFile, audioFile);
-    clearMetaData(audioFile);
+    // console.log(Object.keys(videoInfo))
+    // convertVideoToAudio(videoFile, audioFile);
+    // clearMetaData(audioFile);
 }
 
 main();
