@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
   "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joshunrau/ytdl-mp3.git"
@@ -15,5 +18,8 @@
   "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
   "devDependencies": {
     "electron": "^17.0.0"
+  },
+  "dependencies": {
+    "ytdl-core": "^4.10.1"
   }
 }
