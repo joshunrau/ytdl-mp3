@@ -1,3 +1,8 @@
+const { app, BrowserWindow } = require('electron')
+
+
+/*
+
 const cp = require("child_process");
 const ffmpeg = require('ffmpeg-static');
 const fs = require('fs');
@@ -74,3 +79,5 @@ async function main() {
 }
 
 main();
+
+*/

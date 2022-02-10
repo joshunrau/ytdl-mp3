@@ -12,5 +12,8 @@
   "bugs": {
     "url": "https://github.com/joshunrau/ytdl-mp3/issues"
   },
-  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme"
+  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
+  "devDependencies": {
+    "electron": "^17.0.0"
+  }
 }
