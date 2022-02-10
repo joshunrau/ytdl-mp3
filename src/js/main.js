@@ -7,6 +7,9 @@ const path = require('path');
 const stream = require('stream');
 const ytdl = require('ytdl-core');
 
+const appPath = app.getAppPath();
+console.log("Registered application path: " + appPath);
+
 const downloadsDirectory = path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads');
 console.log("Registered downloads directory: " + downloadsDirectory);
 
@@ -15,10 +18,10 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(appPath, 'src', 'js', 'preload.js')
         }
     });
-    mainWindow.loadFile('index.html');
+    mainWindow.loadFile(path.join(appPath, 'src', 'html', 'index.html'));
 };
 
 app.whenReady().then(() => {
@@ -38,6 +41,15 @@ ipcMain.on("download-triggered", (_event, url) => {
 });
 
 /*****************************************************/
+
+function pathExists(myPath) {
+    try {
+        fs.accessSync(myPath, fs.constants.F_OK);
+        return true;
+    } catch {
+        return false;
+    };
+};
 
 class Song {
 
@@ -65,6 +77,11 @@ class Song {
     };
 
     async downloadVideo() {
+
+        if (pathExists(this.videoFile)) {
+            return new Error("ERROR: Video file already exists!");
+        };
+
         return stream.promises.pipeline(
             ytdl.downloadFromInfo(this.info),
             fs.createWriteStream(this.videoFile)
@@ -74,13 +91,11 @@ class Song {
     // Convert mp4 video file into mp3 using ffmpeg
     convertVideoToAudio() {
 
-        try {
-            fs.accessSync(this.audioFile, fs.constants.F_OK);
-            console.error("ERROR: Audio file already exists!");
-            return null; // return error once I learn how to catch them properly
-        } catch (error) {
-            console.log("Verified that audio file does not already exist!");
+        if (pathExists(this.audioFile)) {
+            return new Error("ERROR: Audio file already exists!");
         };
+
+        console.log("Verified that audio file does not already exist!");
 
         cp.execSync(this.ffmpegCommand);
         console.log("File conversion successful!"); // try to implement as callback

@@ -2,7 +2,7 @@
   "name": "ytdl-mp3",
   "version": "1.0.0",
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
-  "main": "main.js",
+  "main": "src/js/main.js",
   "scripts": {
     "start": "electron ."
   },
