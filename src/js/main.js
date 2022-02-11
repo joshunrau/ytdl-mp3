@@ -32,10 +32,10 @@ ipcMain.on("download-triggered", (_event, url, tags) => {
     
     console.log(`url: ${url}, tags: ${Object.entries(tags)}`);
 
-    fileName = tags.title.toLowerCase().replaceAll(" ", "_")
+    fileName = tags.title.toLowerCase().replaceAll(" ", "_").replaceAll("'", "")
     const audioFile = path.join(downloadsDirectory, fileName + ".mp3");
     const videoFile = path.join(downloadsDirectory, fileName + ".mp4");
-
+    
     ytdl.getInfo(url, {quality: 'highestaudio'})
         .then(info => {
             videoDetails = info.videoDetails;
@@ -45,7 +45,7 @@ ipcMain.on("download-triggered", (_event, url, tags) => {
             );
         })
         .then(() => {
-            ffmpegCommand = `${ffmpeg} -loglevel 24 -i ${videoFile} ${audioFile}`;
+            ffmpegCommand = `${ffmpeg} -loglevel 24 -i ${videoFile} -vn -sn -c:a mp3 -ab 192k ${audioFile}`;
             cp.execSync(ffmpegCommand);
             fs.rmSync(videoFile);
         })
