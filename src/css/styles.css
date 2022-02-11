@@ -1,3 +1,16 @@
 body {
-    background-color: red;
-};
+    background-color: lightblue;
+}
+
+h1 {
+    text-align: center;
+}
+form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    padding: 20px;
+}
