@@ -13,9 +13,6 @@ console.log("Registered application path: " + appPath);
 const downloadsDirectory = path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads');
 console.log("Registered downloads directory: " + downloadsDirectory);
 
-let audioFile = path.join(downloadsDirectory, "audio.mp3");
-let videoFile = path.join(downloadsDirectory, "video.mp4");
-
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -31,19 +28,30 @@ app.whenReady().then(() => {
     createWindow();
 });
 
-ipcMain.on("download-triggered", (_event, url) => {
-    console.log("Revieved URL: " + url);
+ipcMain.on("download-triggered", (_event, url, tags) => {
+    
+    console.log(`url: ${url}, tags: ${Object.entries(tags)}`);
+
+    fileName = tags.title.toLowerCase().replaceAll(" ", "_")
+    const audioFile = path.join(downloadsDirectory, fileName + ".mp3");
+    const videoFile = path.join(downloadsDirectory, fileName + ".mp4");
+
     ytdl.getInfo(url, {quality: 'highestaudio'})
-    .then(info => {
-        videoDetails = info.videoDetails;
-        return stream.promises.pipeline(
-            ytdl.downloadFromInfo(info),
-            fs.createWriteStream(videoFile)
-        );
-    })
-    .then(() => {
-        ffmpegCommand = `${ffmpeg} -loglevel 24 -i ${videoFile} ${audioFile}`;
-        cp.execSync(ffmpegCommand);
-        fs.rmSync(videoFile);
-    });
+        .then(info => {
+            videoDetails = info.videoDetails;
+            return stream.promises.pipeline(
+                ytdl.downloadFromInfo(info),
+                fs.createWriteStream(videoFile)
+            );
+        })
+        .then(() => {
+            ffmpegCommand = `${ffmpeg} -loglevel 24 -i ${videoFile} ${audioFile}`;
+            cp.execSync(ffmpegCommand);
+            fs.rmSync(videoFile);
+        })
+        .then(() => {
+            id3.write(tags, audioFile, error => {
+                console.error(error);
+            })
+        });
 });
