@@ -51,7 +51,7 @@ ipcMain.on("download-triggered", (_event, url, tags) => {
         })
         .then(() => {
             id3.write(tags, audioFile, error => {
-                console.error(error);
-            })
+                if (error) console.error(error);
+            });
         });
 });

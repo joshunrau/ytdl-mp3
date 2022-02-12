@@ -1,5 +1,5 @@
 {
-  "name": "ytdl-mp3",
+  "name": "ytdl-mp3-tag",
   "version": "1.0.0",
   "description": "Easily Download YouTube Videos, Convert to MP3, and Apply Cover Art",
   "main": "src/js/main.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshunrau/ytdl-mp3.git"
+    "url": "git+https://github.com/joshunrau/ytdl-mp3-tag.git"
   },
   "author": "Joshua Unrau",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/joshunrau/ytdl-mp3/issues"
+    "url": "https://github.com/joshunrau/ytdl-mp3-tag/issues"
   },
-  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
+  "homepage": "https://github.com/joshunrau/ytdl-mp3-tag#readme",
   "devDependencies": {
     "electron": "^17.0.0"
   },
