@@ -6,7 +6,7 @@ Given only the URL, this simple command line utility allows you to download musi
 
 ## Installation
 
-    npm install ytdl-mp3
+    npm install -g ytdl-mp3
 
 ## Usage
 
