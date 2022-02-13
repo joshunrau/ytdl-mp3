@@ -1,4 +1,4 @@
-<h1 align="center">ytdl-mp3</h1>
+# ytdl-mp3
 
 ## About
 
