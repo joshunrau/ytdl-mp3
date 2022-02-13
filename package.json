@@ -1,6 +1,6 @@
 {
   "name": "ytdl-mp3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A command line tool for downloading YouTube videos, converting them to mp3 format, then automatically retrieving and applying ID3 tags and cover art.",
   "main": "index.js",
   "bin": {
