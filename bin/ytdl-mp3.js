@@ -2,8 +2,8 @@
 
 const { program } = require('commander');
 const path = require('path');
-const pkg = require('../package.json');
-const Song = require("../lib/index");
+const pkg = require(path.join(__dirname, "..", "package.json"));
+const Song = require(path.join(__dirname, "..", "lib", "index.js"));
 const ytdl = require('ytdl-core');
 
 program.name(pkg.name);
