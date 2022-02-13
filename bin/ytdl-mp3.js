@@ -3,7 +3,7 @@
 const { program } = require('commander');
 const path = require('path');
 const pkg = require('../package.json');
-const Song = require("./song");
+const Song = require("../lib/index");
 const ytdl = require('ytdl-core');
 
 program.name(pkg.name);
