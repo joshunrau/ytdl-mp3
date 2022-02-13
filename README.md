@@ -1,4 +1,4 @@
 # ytdl-mp3
 
 ## About
-This project allows you to easily download YouTube videos, convert them to mp3 format, and scrape the web for relevant cover art and metadata.
+A command line tool for downloading YouTube videos, converting them to mp3 format, then automatically retrieving and applying ID3 tags and cover art.
