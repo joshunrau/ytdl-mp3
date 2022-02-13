@@ -4,7 +4,7 @@
   "description": "A command line tool for downloading YouTube videos, converting them to mp3 format, then automatically retrieving and applying ID3 tags and cover art.",
   "main": "index.js",
   "bin": {
-    "ytdl-mp3-tag": "./src/index.js"
+    "ytdl-mp3": "./src/index.js"
   },
   "repository": {
     "type": "git",
