@@ -10,12 +10,12 @@ const downloadsDirectory = path.join(process.env.HOME || process.env.USERPROFILE
 
 module.exports = class Song {
 
-    constructor(videoInfo) {
+    constructor(videoInfo, options) {
 
         this.videoInfo = videoInfo;
         this.songTags = {
-            "title": videoInfo.videoDetails.media.song,
-            "artist": videoInfo.videoDetails.media.artist,
+            "title": options.title ? options.title : videoInfo.videoDetails.media.song,
+            "artist": options.artist ? options.artist : videoInfo.videoDetails.media.artist,
         };
 
         Object.entries(this.songTags).forEach(([key, value]) => {
@@ -24,7 +24,9 @@ module.exports = class Song {
             };
         });
 
-        if (videoInfo.videoDetails.media.album) {
+        if (options.album) {
+            this.songTags.album = options.album;
+        } else if (videoInfo.videoDetails.media.album) {
             this.songTags.album = videoInfo.videoDetails.media.album;
         } else {
             this.songTags.album = videoInfo.videoDetails.media.song;
@@ -57,7 +59,7 @@ module.exports = class Song {
     async findAlbumArt() {
 
         let url = new URL("https://itunes.apple.com/search?country=US&media=music");
-        url.searchParams.set("term", this.songTags.title);
+        url.searchParams.set("term", `$${this.songTags.artist} ${this.songTags.title}`);
 
         let infoResponse = await axios.get(url.href)
         
