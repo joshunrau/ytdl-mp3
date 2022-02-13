@@ -6,8 +6,6 @@ const id3 = require('node-id3');
 const path = require('path');
 const ytdl = require('ytdl-core');
 
-const downloadsDirectory = path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads');
-
 module.exports = class Song {
 
     constructor(videoInfo, options) {
@@ -32,10 +30,11 @@ module.exports = class Song {
             this.songTags.album = videoInfo.videoDetails.media.song;
         };
 
+        this.outputDirectory = options.output
         let baseFileName = this.songTags.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
         this.filePaths = {
-            "audioFile": path.join(downloadsDirectory, baseFileName + ".mp3"),
-            "videoFile": path.join(downloadsDirectory, baseFileName + ".mp4")
+            "audioFile": path.join(this.outputDirectory, baseFileName + ".mp3"),
+            "videoFile": path.join(this.outputDirectory, baseFileName + ".mp4")
         };
     };
 
@@ -75,7 +74,7 @@ module.exports = class Song {
         for (let result of infoResponse.data.results) {
             if (result.artworkUrl100 !== undefined) {
                 let artworkUrl600 = result.artworkUrl100.replace("100x100bb.jpg", "600x600bb.jpg");
-                let artworkFilepath = path.join(downloadsDirectory, "album_art.jpg");
+                let artworkFilepath = path.join(this.outputDirectory, "album_art.jpg");
                 let fileStream = fs.createWriteStream(artworkFilepath)
                 return axios.get(artworkUrl600, {responseType: 'stream'})
                     .then(artworkResponse => {
