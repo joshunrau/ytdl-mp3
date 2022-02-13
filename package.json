@@ -21,6 +21,7 @@
   "homepage": "https://github.com/joshunrau/ytdl-mp3-tag#readme",
   "dependencies": {
     "axios": "^0.25.0",
+    "commander": "^9.0.0",
     "ffmpeg-static": "^4.4.1",
     "js-beautify": "^1.14.0",
     "node-id3": "^0.2.3",
