@@ -31,10 +31,18 @@ module.exports = class Song {
         };
 
         this.outputDirectory = options.output
-        let baseFileName = this.songTags.title.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        let baseFileName = this.songTags.title.replace(/[^a-z0-9]/gi, '_').split("_").filter(element => element).join("_").toLowerCase();
         this.filePaths = {
             "audioFile": path.join(this.outputDirectory, baseFileName + ".mp3"),
             "videoFile": path.join(this.outputDirectory, baseFileName + ".mp4")
+        };
+    };
+
+    removeAllFiles() {
+        for (let file of Object.values(this.filePaths)) {
+            if (fs.existsSync(file)) {
+                fs.rmSync(file);
+            };
         };
     };
 
@@ -47,6 +55,7 @@ module.exports = class Song {
             stream.on("finish", () => resolve(this));
             stream.on("error", reject);
         });
+        
     };
 
     convertVideoToAudio() {

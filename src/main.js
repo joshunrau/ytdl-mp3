@@ -2,8 +2,8 @@
 
 const { program } = require('commander');
 const path = require('path');
-const pkg = require(path.join(__dirname, "..", "package.json"));
-const Song = require(path.join(__dirname, "..", "lib", "index.js"));
+const pkg = require("../package.json");
+const Song = require("./song");
 const ytdl = require('ytdl-core');
 
 program.name(pkg.name);
@@ -17,13 +17,14 @@ program.option("--artist <tag>", "artist tag");
 program.option("--album <tag>", "album tag");
 program.parse();
 
-const main = async () => {
-    song = await ytdl.getInfo(program.args[0], {quality: 'highestaudio'})
-        .then(info => new Song(info, program.opts()))
-        .then(song => song.downloadVideo())
-        .then(song => song.convertVideoToAudio())
-        .then(song => song.findAlbumArt())
-        .then(song => song.applyTags())
+async function main() {
+    let videoInfo = await ytdl.getInfo(program.args[0], {quality: 'highestaudio'});
+    let song = new Song(videoInfo, program.opts());
+    song.removeAllFiles();
+    await song.downloadVideo();
+    song.convertVideoToAudio();
+    await song.findAlbumArt();
+    song.applyTags();
 };
 
-main()
+main();
