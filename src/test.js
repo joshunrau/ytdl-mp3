@@ -1,31 +1,12 @@
 const fs = require('fs');
-const path = require('path');
-const Song = require("./song");
-const ytdl = require('ytdl-core');
+const main = require('./main');
 
-const videoURL = "https://www.youtube.com/watch?v=b6jK2t3lcRs";
+const videoURL = "https://www.youtube.com/watch?v=X5OdGEqYkOc";
 
-let userOptions = {
-    "output": path.join(process.env.HOME || process.env.USERPROFILE, 'Downloads'),
-    "title": "Kontekst",
-    "artist": "Buddha",
-    "album": "Kontekst Beats Collection 1"
-};
+jest.setTimeout(30000);
 
 test("main", async () => {
-
-    let videoInfo = await ytdl.getInfo(videoURL, {quality: 'highestaudio'});
-    let song = new Song(videoInfo, userOptions);
-    
-    song.removeAllFiles();
-    expect(fs.existsSync(song.filePaths.audioFile)).toBe(false);
-
-    await song.downloadVideo();
-    song.convertVideoToAudio();
-    await song.findAlbumArt();
-    song.applyTags();
-
-    expect(fs.existsSync(song.filePaths.audioFile)).toBe(true);
-    song.removeAllFiles();
-    
+    let filePath = await main(videoURL);
+    expect(fs.existsSync(filePath)).toBe(true);
+    fs.rmSync(filePath);
 });
