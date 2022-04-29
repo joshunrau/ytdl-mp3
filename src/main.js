@@ -53,13 +53,13 @@ module.exports = async function main(videoURL, options = {"output": utils.getDow
     };
 
     // download video
-    let stream = ytdl.downloadFromInfo(videoInfo)
+    let stream = ytdl.downloadFromInfo(videoInfo, {quality: 'highestaudio'})
         .pipe(fs.createWriteStream(filePaths.videoFile));
     
     await new Promise((resolve, reject) => {
         stream.on("finish", resolve);
         stream.on("error", (err) => {
-            reject(err)
+            reject(err);
         });
     });
 
@@ -111,7 +111,12 @@ module.exports = async function main(videoURL, options = {"output": utils.getDow
         };
     });
 
-    fs.rmSync(artworkFilepath);
+    if (fs.existsSync(artworkFilepath)) {
+        fs.rmSync(artworkFilepath);
+    } else {
+        throw new Error(`Expected artwork file not found: ${artworkFilepath}`);
+    };
+
     id3.write(songTags, filePaths.audioFile);
     return filePaths.audioFile;
 
