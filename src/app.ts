@@ -21,5 +21,7 @@ program.option(
 );
 program.parse();
 
-console.log(program.opts().title)
-// main(program.args[0], program.opts());
+// Until latest version works
+process.env['YTDL_NO_UPDATE'] = '1';
+
+main(program.args[0], program.opts());
