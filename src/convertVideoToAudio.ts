@@ -3,10 +3,14 @@ import fs from 'fs';
 import ffmpeg from 'ffmpeg-static';
 
 interface Options {
-  clean?: boolean
+  clean?: boolean;
 }
 
-export default function convertVideoToAudio(inputFile: string, outputFile: string, options?: Options) {
+export default function convertVideoToAudio(
+  inputFile: string,
+  outputFile: string,
+  options?: Options
+) {
   if (!fs.existsSync(inputFile)) {
     throw new Error('Input file does not exist: ' + inputFile);
   }

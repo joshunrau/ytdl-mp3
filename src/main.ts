@@ -12,7 +12,10 @@ interface Options {
   artist?: string;
 }
 
-export default async function main(url: string, options?: Options): Promise<void> {
+export default async function main(
+  url: string,
+  options?: Options
+): Promise<void> {
   const videoInfo = await ytdl.getInfo(url).catch(() => {
     throw new Error('Unable to fetch info for video with URL: ' + url);
   });

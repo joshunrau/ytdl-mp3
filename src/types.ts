@@ -15,7 +15,7 @@ export interface SongTags {
 }
 
 export interface SearchResult {
-  artistName: string
-  trackName: string
-  artworkUrl100: string
+  artistName: string;
+  trackName: string;
+  artworkUrl100: string;
 }

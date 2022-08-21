@@ -10,18 +10,17 @@ export default function getFilepaths(title: string, outputDir?: string) {
     .filter((element) => element)
     .join('_')
     .toLowerCase();
-  
+
   const filepaths = {
     audioFile: path.join(outputDir || getDownloadsDir(), baseFileName + '.mp3'),
     videoFile: path.join(outputDir || getDownloadsDir(), baseFileName + '.mp4'),
   };
 
-  Object.values(filepaths).forEach(file => {
+  Object.values(filepaths).forEach((file) => {
     if (fs.existsSync(file)) {
       fs.rmSync(file);
     }
   });
-  
-  return filepaths;
 
+  return filepaths;
 }

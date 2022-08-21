@@ -6,15 +6,19 @@ import fetchSearchResults from './fetchSearchResults';
 import { SongTags } from './types';
 import { removeParenthesizedText } from './utils';
 
-export default async function extractSongTags(videoInfo: VideoInfo): Promise<SongTags> {
-
+export default async function extractSongTags(
+  videoInfo: VideoInfo
+): Promise<SongTags> {
   const searchTerm = removeParenthesizedText(videoInfo.videoDetails.title);
   const results = await fetchSearchResults(searchTerm);
 
   // In the future, add option to allow user to verify result
   const result = results[0];
 
-  const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
+  const artworkUrl = result.artworkUrl100.replace(
+    '100x100bb.jpg',
+    '600x600bb.jpg'
+  );
   const albumArt = await fetchAlbumArt(artworkUrl);
 
   return {
@@ -28,6 +32,6 @@ export default async function extractSongTags(videoInfo: VideoInfo): Promise<Son
       },
       description: 'Album Art',
       imageBuffer: albumArt,
-    }
+    },
   };
 }
