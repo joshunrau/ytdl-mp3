@@ -9,7 +9,8 @@
     "prettier"
   ],
   "ignorePatterns": [
-    "dist"
+    "bin",
+    "build"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",

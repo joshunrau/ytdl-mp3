@@ -1,26 +1,33 @@
 import type { videoInfo as VideoInfo } from 'ytdl-core';
 
+import fetchAlbumArt from './fetchAlbumArt';
+import fetchSearchResults from './fetchSearchResults';
+
 import { SongTags } from './types';
-import { userInput } from './utils';
+import { removeParenthesizedText } from './utils';
 
-export default async function extractSongTags(
-  videoInfo: VideoInfo
-): Promise<SongTags> {
-  const songTags = {
-    title: videoInfo.videoDetails.media.song,
-    artist: videoInfo.videoDetails.media.artist,
-    image: null,
-  };
-  
-  if (Object.values(songTags).includes(undefined)) {
-    console.log('Unable to extract all song tags from YouTube');
-  }
+export default async function extractSongTags(videoInfo: VideoInfo): Promise<SongTags> {
 
-  for (const tag in songTags) {
-    if (songTags[tag] === undefined) {
-      songTags[tag] = await userInput(`Enter ${tag}: `);
+  const searchTerm = removeParenthesizedText(videoInfo.videoDetails.title);
+  const results = await fetchSearchResults(searchTerm);
+
+  // In the future, add option to allow user to verify result
+  const result = results[0];
+
+  const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
+  const albumArt = await fetchAlbumArt(artworkUrl);
+
+  return {
+    title: result.trackName,
+    artist: result.artistName,
+    image: {
+      mime: 'image/png',
+      type: {
+        id: 3,
+        name: 'front cover',
+      },
+      description: 'Album Art',
+      imageBuffer: albumArt,
     }
-  }
-
-  return songTags;
+  };
 }

@@ -1,9 +1,3 @@
-export interface ProgramOptions {
-  outputDir: string;
-  title?: string;
-  artist?: string;
-}
-
 export interface AlbumArt {
   mime: string;
   type: {
@@ -17,5 +11,11 @@ export interface AlbumArt {
 export interface SongTags {
   title: string;
   artist: string;
-  image: AlbumArt | null;
+  image: AlbumArt;
+}
+
+export interface SearchResult {
+  artistName: string
+  trackName: string
+  artworkUrl100: string
 }
