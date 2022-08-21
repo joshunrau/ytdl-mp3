@@ -1,5 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { SearchResult } from './types';
+
+interface SearchResult {
+  artistName: string;
+  trackName: string;
+  artworkUrl100: string;
+}
 
 export default async function fetchSearchResults(
   searchTerm: string

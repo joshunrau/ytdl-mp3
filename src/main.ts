@@ -1,10 +1,10 @@
+import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 
 import convertVideoToAudio from './convertVideoToAudio';
 import downloadVideo from './downloadVideo';
 import extractSongTags from './extractSongTags';
 import getFilepaths from './getFilepaths';
-import writeTags from './writeTags';
 
 interface Options {
   outputDir?: string;
@@ -23,5 +23,5 @@ export default async function main(
   const filepaths = getFilepaths(songTags.title, options?.outputDir);
   await downloadVideo(videoInfo, filepaths.videoFile);
   convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
-  writeTags(songTags, filepaths.audioFile);
+  NodeID3.write(songTags, filepaths.audioFile);
 }

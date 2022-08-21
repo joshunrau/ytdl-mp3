@@ -3,8 +3,23 @@ import type { videoInfo as VideoInfo } from 'ytdl-core';
 import fetchAlbumArt from './fetchAlbumArt';
 import fetchSearchResults from './fetchSearchResults';
 
-import { SongTags } from './types';
 import { removeParenthesizedText } from './utils';
+
+interface AlbumArt {
+  mime: string;
+  type: {
+    id: number;
+    name: string;
+  };
+  description: string;
+  imageBuffer: Buffer;
+}
+
+interface SongTags {
+  title: string;
+  artist: string;
+  image: AlbumArt;
+}
 
 export default async function extractSongTags(
   videoInfo: VideoInfo
