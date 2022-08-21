@@ -8,8 +8,6 @@ import getFilepaths from './getFilepaths';
 
 interface Options {
   outputDir?: string;
-  title?: string;
-  artist?: string;
 }
 
 export default async function main(

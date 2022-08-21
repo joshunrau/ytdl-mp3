@@ -14,8 +14,6 @@ program.description(description);
 program.version(version);
 program.allowExcessArguments(false);
 program.argument('<url>', 'url of video to download');
-program.option('-t --title', 'title of song');
-program.option('-a --artist', 'artist of song');
 program.option('-o --output-dir', 'path to output directory', path.join(os.homedir(), 'Downloads'));
 program.parse();
 
