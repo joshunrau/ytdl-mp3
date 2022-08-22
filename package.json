@@ -13,6 +13,7 @@
     "format": "prettier --write src/**",
     "lint": "eslint --fix --ext .ts src/",
     "preversion": "npm run lint && npm run format && npm test",
+    "postversion": "git push && git push --tags",
     "test": "jest",
     "version": "npm run build",
     "ytdl-mp3": "ts-node ./bin/ytdl-mp3"
