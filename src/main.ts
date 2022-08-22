@@ -1,6 +1,7 @@
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 
+import { NotADirectoryError } from './exceptions';
 import { isDirectory } from './utils';
 
 import convertVideoToAudio from './convertVideoToAudio';
@@ -10,7 +11,7 @@ import getFilepaths from './getFilepaths';
 
 interface Options {
   outputDir: string;
-  getTags: boolean;
+  getTags?: boolean;
   verifyTags?: boolean;
 }
 
@@ -19,7 +20,7 @@ export default async function main(
   options: Options
 ): Promise<void> {
   if (!isDirectory(options.outputDir)) {
-    throw new Error('Not a directory: ' + options.outputDir);
+    throw new NotADirectoryError(options.outputDir);
   }
   const videoInfo = await ytdl.getInfo(url).catch(() => {
     throw new Error('Unable to fetch info for video with URL: ' + url);
