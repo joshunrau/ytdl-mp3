@@ -23,7 +23,9 @@ export default async function downloadSong(
     throw new NotADirectoryError(options.outputDir);
   }
   const videoInfo = await ytdl.getInfo(url).catch(() => {
-    throw new VideoInfoFetchError('Unable to fetch info for video with URL: ' + url);
+    throw new VideoInfoFetchError(
+      'Unable to fetch info for video with URL: ' + url
+    );
   });
 
   const filepaths = getFilepaths(
@@ -37,5 +39,4 @@ export default async function downloadSong(
     const songTags = await extractSongTags(videoInfo, options.verifyTags);
     NodeID3.write(songTags, filepaths.audioFile);
   }
-
 }
