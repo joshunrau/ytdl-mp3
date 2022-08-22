@@ -12,7 +12,7 @@ The easiest way to use ytdl-mp3 is through the command-line interface. Users mus
 
     Usage: ytdl-mp3 [options] <url>
 
-    A JavaScript library for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.
+    A JavaScript package for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.
 
     Arguments:
     url                     url of video to download
@@ -23,3 +23,12 @@ The easiest way to use ytdl-mp3 is through the command-line interface. Users mus
     -n --no-get-tags        skip extracting/applying id3 tags
     -v --verify-tags        verify id3 tags fetched from itunes
     -h, --help              display help for command
+
+
+You can also use ytdl-mp3 as a CommonJS module. For example, to achieve the same functionality as the default command line options:
+
+    const { downloadSong } = require('ytdl-mp3');
+
+    downloadSong('https://www.youtube.com/watch?v=dQw4w9WgXcQ', {
+        getTags: true
+    })
