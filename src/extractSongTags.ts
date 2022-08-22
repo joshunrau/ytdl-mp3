@@ -2,6 +2,7 @@ import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import fetchAlbumArt from './fetchAlbumArt';
 import fetchSearchResults from './fetchSearchResults';
+import verifySearchResult from './verifySearchResult';
 
 import { removeParenthesizedText } from './utils';
 
@@ -22,13 +23,20 @@ interface SongTags {
 }
 
 export default async function extractSongTags(
-  videoInfo: VideoInfo
+  videoInfo: VideoInfo,
+  verify?: boolean
 ): Promise<SongTags> {
   const searchTerm = removeParenthesizedText(videoInfo.videoDetails.title);
   const results = await fetchSearchResults(searchTerm);
 
-  // In the future, add option to allow user to verify result
-  const result = results[0];
+  let result = results[0];
+  if (verify) {
+    for (result of results) {
+      if (await verifySearchResult(result)) {
+        break;
+      }
+    }
+  }
 
   const artworkUrl = result.artworkUrl100.replace(
     '100x100bb.jpg',

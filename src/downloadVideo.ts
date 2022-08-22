@@ -5,7 +5,7 @@ import { downloadFromInfo, videoInfo as VideoInfo } from 'ytdl-core';
 export default function downloadVideo(
   videoInfo: VideoInfo,
   outputFile: string
-) {
+): Promise<unknown> {
   const stream = downloadFromInfo(videoInfo, { quality: 'highestaudio' }).pipe(
     fs.createWriteStream(outputFile)
   );

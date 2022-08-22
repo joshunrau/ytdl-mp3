@@ -3,7 +3,15 @@ import path from 'path';
 
 import { removeParenthesizedText } from './utils';
 
-export default function getFilepaths(title: string, outputDir: string) {
+interface Filepaths {
+  audioFile: string;
+  videoFile: string;
+}
+
+export default function getFilepaths(
+  title: string,
+  outputDir: string
+): Filepaths {
   const baseFileName = removeParenthesizedText(title)
     .replace(/[^a-z0-9]/gi, '_')
     .split('_')

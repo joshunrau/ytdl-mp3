@@ -11,6 +11,7 @@ import getFilepaths from './getFilepaths';
 interface Options {
   outputDir: string;
   getTags: boolean;
+  verifyTags?: boolean;
 }
 
 export default async function main(
@@ -32,7 +33,7 @@ export default async function main(
   convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
 
   if (options.getTags) {
-    const songTags = await extractSongTags(videoInfo);
+    const songTags = await extractSongTags(videoInfo, options.verifyTags);
     NodeID3.write(songTags, filepaths.audioFile);
   }
 }

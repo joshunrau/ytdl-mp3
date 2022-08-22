@@ -23,6 +23,7 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "warn",
     "indent": [
       "error",
       2

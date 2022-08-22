@@ -14,6 +14,7 @@ program.allowExcessArguments(false);
 program.argument('<url>', 'url of video to download');
 program.option('-o --output-dir <path>', 'path to output directory', getDownloadsDir());
 program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
+program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
 program.parse();
 
 // Until latest version works
