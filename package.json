@@ -53,5 +53,12 @@
     "ffmpeg-static": "^5.0.2",
     "node-id3": "^0.2.3",
     "ytdl-core": "4.10.0"
-  }
+  },
+  "files": [
+    "bin",
+    "build",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ]
 }
