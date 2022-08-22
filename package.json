@@ -1,15 +1,16 @@
 {
   "name": "ytdl-mp3",
   "version": "2.0.0",
-  "description": "A command line tool for downloading YouTube videos, converting them to mp3 format, then automatically retrieving and applying ID3 tags and cover art.",
+  "description": "A JavaScript package for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
   "bin": {
     "ytdl-mp3": "./bin/ytdl-mp3"
   },
+  "main": "./build/index.js",
   "scripts": {
     "build": "rm -rf build && tsc",
     "format": "prettier --write src/**",
     "lint": "eslint --fix --ext .ts src/",
-    "preversion": "npm test",
+    "preversion": "npm run lint && npm run format && npm test",
     "test": "jest",
     "version": "npm run build",
     "ytdl-mp3": "ts-node ./bin/ytdl-mp3"
