@@ -9,7 +9,9 @@
     "build": "rm -rf build && tsc",
     "format": "prettier --write src/**",
     "lint": "eslint --fix --ext .ts src/",
+    "preversion": "npm test",
     "test": "jest",
+    "version": "npm run build",
     "ytdl-mp3": "ts-node ./bin/ytdl-mp3"
   },
   "repository": {
