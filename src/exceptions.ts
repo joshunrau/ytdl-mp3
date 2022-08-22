@@ -10,3 +10,9 @@ export class NotADirectoryError extends BaseError {
     super(message);
   }
 }
+
+export class VideoInfoFetchError extends BaseError {
+  constructor(message: string) {
+    super(message);
+  }
+}
