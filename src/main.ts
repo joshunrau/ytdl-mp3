@@ -37,4 +37,5 @@ export default async function main(
     const songTags = await extractSongTags(videoInfo, options.verifyTags);
     NodeID3.write(songTags, filepaths.audioFile);
   }
+
 }
