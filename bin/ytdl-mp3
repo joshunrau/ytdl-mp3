@@ -3,7 +3,7 @@
 const { Command } = require('commander');
 const { name, description, version } = require('../package.json');
 
-const main = require('../build/main');
+const { downloadSong } = require('../build');
 const { getDownloadsDir } = require('../build/utils');
 
 const program = new Command();
@@ -20,4 +20,4 @@ program.parse();
 // Until latest version works
 process.env['YTDL_NO_UPDATE'] = '1';
 
-main.default(program.args[0], program.opts());
+downloadSong(program.args[0], program.opts());
