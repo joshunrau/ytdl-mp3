@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getDownloadsDir } from './utils';
+import { removeParenthesizedText } from './utils';
 
-export default function getFilepaths(title: string, outputDir?: string) {
-  const baseFileName = title
+export default function getFilepaths(title: string, outputDir: string) {
+  const baseFileName = removeParenthesizedText(title)
     .replace(/[^a-z0-9]/gi, '_')
     .split('_')
     .filter((element) => element)
@@ -12,8 +12,8 @@ export default function getFilepaths(title: string, outputDir?: string) {
     .toLowerCase();
 
   const filepaths = {
-    audioFile: path.join(outputDir || getDownloadsDir(), baseFileName + '.mp3'),
-    videoFile: path.join(outputDir || getDownloadsDir(), baseFileName + '.mp4'),
+    audioFile: path.join(outputDir, baseFileName + '.mp3'),
+    videoFile: path.join(outputDir, baseFileName + '.mp4'),
   };
 
   Object.values(filepaths).forEach((file) => {

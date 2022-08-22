@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
-const path = require('path');
-const os = require('os');
-
 const { Command } = require('commander');
 const { name, description, version } = require('../package.json');
 
 const main = require('../build/main');
+const { getDownloadsDir } = require('../build/utils');
 
 const program = new Command();
 program.name(name);
@@ -14,7 +12,8 @@ program.description(description);
 program.version(version);
 program.allowExcessArguments(false);
 program.argument('<url>', 'url of video to download');
-program.option('-o --output-dir', 'path to output directory', path.join(os.homedir(), 'Downloads'));
+program.option('-o --output-dir <path>', 'path to output directory', getDownloadsDir());
+program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.parse();
 
 // Until latest version works

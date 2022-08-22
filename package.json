@@ -10,7 +10,7 @@
     "format": "prettier --write src/**",
     "lint": "eslint --fix --ext .ts src/",
     "test": "jest",
-    "ytdl-mp3": "./bin/ytdl-mp3"
+    "ytdl-mp3": "ts-node ./bin/ytdl-mp3"
   },
   "repository": {
     "type": "git",
