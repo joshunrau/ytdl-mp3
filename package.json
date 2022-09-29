@@ -1,6 +1,6 @@
 {
   "name": "ytdl-mp3",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A JavaScript package for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
   "type": "commonjs",
   "bin": {
