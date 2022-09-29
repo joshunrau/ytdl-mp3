@@ -39,4 +39,6 @@ export default async function downloadSong(
     const songTags = await extractSongTags(videoInfo, options.verifyTags);
     NodeID3.write(songTags, filepaths.audioFile);
   }
+
+  console.log(`Done! Output file: ${filepaths.audioFile}`);
 }

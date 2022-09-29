@@ -1,7 +1,7 @@
 {
   "name": "ytdl-mp3",
-  "version": "2.0.3",
-  "description": "A JavaScript package for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
+  "version": "2.0.2",
+  "description": "A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
   "type": "commonjs",
   "bin": {
     "ytdl-mp3": "./bin/ytdl-mp3"
@@ -53,7 +53,7 @@
     "commander": "^9.4.0",
     "ffmpeg-static": "^5.0.2",
     "node-id3": "^0.2.3",
-    "ytdl-core": "4.10.0"
+    "ytdl-core": "^4.11.2"
   },
   "files": [
     "bin",
