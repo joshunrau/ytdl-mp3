@@ -32,6 +32,7 @@ You can also use ytdl-mp3 as a CommonJS module. For example, to achieve the same
 
     const { downloadSong } = require('ytdl-mp3');
 
-    downloadSong('https://www.youtube.com/watch?v=dQw4w9WgXcQ', {
+    /** @type {string} - name with extension of file audio */
+    const fileName = downloadSong('https://www.youtube.com/watch?v=dQw4w9WgXcQ', {
         getTags: true
     })
