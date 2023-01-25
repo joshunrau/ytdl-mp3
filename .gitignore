@@ -103,6 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
+# Workspace visual code settings
+.vscode
+
+# file yarn.lock
+yarn.lock
+
 # Added
 .DS_Store
 build

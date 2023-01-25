@@ -18,7 +18,7 @@ interface Options {
 export default async function downloadSong(
   url: string,
   options?: Options
-): Promise<void> {
+): Promise<string> {
   if (options?.outputDir && !isDirectory(options.outputDir)) {
     throw new NotADirectoryError(options.outputDir);
   }
@@ -41,4 +41,5 @@ export default async function downloadSong(
   }
 
   console.log(`Done! Output file: ${filepaths.audioFile}`);
+  return filepaths.audioFile;
 }
