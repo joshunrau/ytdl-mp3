@@ -1,5 +1,3 @@
-import path from 'path';
-
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 

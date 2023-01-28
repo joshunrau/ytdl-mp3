@@ -1,4 +1,4 @@
-import { SearchResult } from './types';
+import { SearchResult } from './fetchSearchResults';
 import { userInput } from './utils';
 
 export default async function verifySearchResult(result: SearchResult): Promise<boolean> {
