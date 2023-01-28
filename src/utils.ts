@@ -15,10 +15,7 @@ export function isDirectory(dirPath: string): boolean {
   return fs.existsSync(dirPath) && fs.lstatSync(dirPath).isDirectory();
 }
 
-export async function userInput(
-  prompt: string,
-  defaultInput?: string
-): Promise<string> {
+export async function userInput(prompt: string, defaultInput?: string): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,

@@ -15,23 +15,15 @@ interface Options {
   verifyTags?: boolean;
 }
 
-export default async function downloadSong(
-  url: string,
-  options?: Options
-): Promise<string> {
+export default async function downloadSong(url: string, options?: Options): Promise<string> {
   if (options?.outputDir && !isDirectory(options.outputDir)) {
     throw new NotADirectoryError(options.outputDir);
   }
   const videoInfo = await ytdl.getInfo(url).catch(() => {
-    throw new VideoInfoFetchError(
-      'Unable to fetch info for video with URL: ' + url
-    );
+    throw new VideoInfoFetchError('Unable to fetch info for video with URL: ' + url);
   });
 
-  const filepaths = getFilepaths(
-    videoInfo.videoDetails.title,
-    options?.outputDir || getDownloadsDir()
-  );
+  const filepaths = getFilepaths(videoInfo.videoDetails.title, options?.outputDir || getDownloadsDir());
   await downloadVideo(videoInfo, filepaths.videoFile);
   convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
 

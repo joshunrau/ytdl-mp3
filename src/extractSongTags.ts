@@ -22,10 +22,7 @@ interface SongTags {
   image: AlbumArt;
 }
 
-export default async function extractSongTags(
-  videoInfo: VideoInfo,
-  verify?: boolean
-): Promise<SongTags> {
+export default async function extractSongTags(videoInfo: VideoInfo, verify?: boolean): Promise<SongTags> {
   const searchTerm = removeParenthesizedText(videoInfo.videoDetails.title);
   const results = await fetchSearchResults(searchTerm);
 
@@ -38,10 +35,7 @@ export default async function extractSongTags(
     }
   }
 
-  const artworkUrl = result.artworkUrl100.replace(
-    '100x100bb.jpg',
-    '600x600bb.jpg'
-  );
+  const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
   const albumArt = await fetchAlbumArt(artworkUrl);
 
   return {
