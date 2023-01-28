@@ -7,6 +7,10 @@ export default function convertVideoToAudio(inputFile: string, outputFile: strin
     throw new Error('Input file does not exist: ' + inputFile);
   }
 
+  if (!ffmpeg) {
+    throw new Error(`Failed to resolve ffmpeg binary`);
+  }
+
   cp.execSync(`${ffmpeg} -loglevel 24 -i ${inputFile} -vn -sn -c:a mp3 -ab 192k ${outputFile}`);
 
   fs.rmSync(inputFile);

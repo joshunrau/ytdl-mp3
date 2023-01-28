@@ -1,3 +1,5 @@
+import path from 'path';
+
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 
@@ -16,14 +18,14 @@ interface Options {
 
 export default async function downloadSong(url: string, options?: Options): Promise<string> {
   if (options?.outputDir && !isDirectory(options.outputDir)) {
-    throw new Error(`Not a directory: ${options.outputDir}`)
+    throw new Error(`Not a directory: ${options.outputDir}`);
   }
 
   const videoInfo = await ytdl.getInfo(url).catch(() => {
     throw new Error(`Failed to fetch info for video with URL: ${url}`);
   });
 
-  const filepaths = getFilepaths(videoInfo.videoDetails.title, options?.outputDir || getDownloadsDir());
+  const filepaths = getFilepaths(videoInfo.videoDetails.title, options?.outputDir ?? getDownloadsDir());
   await downloadVideo(videoInfo, filepaths.videoFile);
   convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
 
