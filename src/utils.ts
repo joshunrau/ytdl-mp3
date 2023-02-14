@@ -1,7 +1,7 @@
-import readline from 'readline';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import readline from 'readline';
 
 export function getDownloadsDir(): string {
   return path.join(os.homedir(), 'Downloads');

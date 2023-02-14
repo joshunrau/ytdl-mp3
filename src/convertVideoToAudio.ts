@@ -1,5 +1,6 @@
 import cp from 'child_process';
 import fs from 'fs';
+
 import ffmpeg from 'ffmpeg-static';
 
 export default function convertVideoToAudio(inputFile: string, outputFile: string): void {

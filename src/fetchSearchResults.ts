@@ -8,7 +8,7 @@ export interface SearchResult {
 
 export interface SearchData {
   resultCount: number;
-  results: SearchResult[]
+  results: SearchResult[];
 }
 
 export default async function fetchSearchResults(searchTerm: string): Promise<SearchResult[]> {

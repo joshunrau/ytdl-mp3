@@ -1,12 +1,12 @@
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 
-import { getDownloadsDir, isDirectory } from './utils';
 
 import convertVideoToAudio from './convertVideoToAudio';
 import downloadVideo from './downloadVideo';
 import extractSongTags from './extractSongTags';
 import getFilepaths from './getFilepaths';
+import { getDownloadsDir, isDirectory } from './utils';
 
 interface Options {
   outputDir?: string;

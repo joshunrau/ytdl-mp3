@@ -2,9 +2,9 @@ import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import fetchAlbumArt from './fetchAlbumArt';
 import fetchSearchResults from './fetchSearchResults';
+import { removeParenthesizedText } from './utils';
 import verifySearchResult from './verifySearchResult';
 
-import { removeParenthesizedText } from './utils';
 
 interface AlbumArt {
   mime: string;
