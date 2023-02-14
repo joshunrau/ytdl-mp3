@@ -2,22 +2,26 @@
   "name": "ytdl-mp3",
   "version": "2.0.3",
   "description": "A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
-  "type": "commonjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "bin": {
     "ytdl-mp3": "./bin/ytdl-mp3"
   },
-  "main": "./build/index.js",
-  "types": "./build/index.d.js",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "build": "rm -rf build && tsc",
-    "format": "prettier --write src/**",
-    "lint": "eslint --fix --ext .ts src/",
+    "build": "tsup",
+    "cli": "ts-node ./bin/ytdl-mp3",
+    "format": "prettier --write ./src/",
+    "lint": "eslint --fix --ext .ts ./src/",
     "prepare": "husky install",
-    "preversion": "npm run lint && npm run format && npm test",
-    "postversion": "git push && git push --tags",
-    "test": "jest",
-    "version": "npm run build",
-    "ytdl-mp3": "ts-node ./bin/ytdl-mp3"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -35,6 +39,13 @@
     "url": "https://github.com/joshunrau/ytdl-mp3/issues"
   },
   "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
+  "dependencies": {
+    "axios": "^1.2.4",
+    "commander": "^10.0.0",
+    "ffmpeg-static": "^5.1.0",
+    "node-id3": "^0.2.5",
+    "ytdl-core": "^4.11.2"
+  },
   "devDependencies": {
     "@types/ffmpeg-static": "^3.0.1",
     "@types/jest": "^29.2.6",
@@ -49,18 +60,12 @@
     "prettier": "2.8.3",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsup": "^6.6.2",
     "typescript": "^4.9.4"
-  },
-  "dependencies": {
-    "axios": "^1.2.4",
-    "commander": "^10.0.0",
-    "ffmpeg-static": "^5.1.0",
-    "node-id3": "^0.2.5",
-    "ytdl-core": "^4.11.2"
   },
   "files": [
     "bin",
-    "build",
+    "dist",
     "LICENSE",
     "README.md",
     "package.json"

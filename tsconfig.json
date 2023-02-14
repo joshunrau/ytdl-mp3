@@ -3,14 +3,13 @@
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["ES2022"],
-    "module": "commonjs",
-    "outDir": "build",
-    "resolveJsonModule": true,
-    "rootDir": "src",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "outDir": "dist",
     "sourceMap": true,
     "strict": true,
     "target": "ES6"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }
