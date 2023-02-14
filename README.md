@@ -28,7 +28,7 @@ The easiest way to use ytdl-mp3 is through the command-line interface. Users mus
     -v --verify-tags        verify id3 tags fetched from itunes
     -h, --help              display help for command
 
-### ES Modules
+### ESM
 
 ```javascript
 import { downloadSong } from 'ytdl-mp3';
