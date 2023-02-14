@@ -1,6 +1,6 @@
 {
   "name": "ytdl-mp3",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -22,6 +22,8 @@
     "format": "prettier --write ./src/",
     "lint": "eslint --fix --ext .ts ./src/",
     "prepare": "husky install",
+    "preversion": "yarn lint && yarn format && npm test",
+    "postversion": "git push && git push --tags",
     "test": "jest"
   },
   "repository": {
