@@ -5,7 +5,6 @@ import fetchSearchResults from './fetchSearchResults';
 import { removeParenthesizedText } from './utils';
 import verifySearchResult from './verifySearchResult';
 
-
 interface AlbumArt {
   mime: string;
   type: {

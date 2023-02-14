@@ -1,10 +1,12 @@
 # ytdl-mp3
 
-A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes. 
+A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.
 
 ## Installation
 
-    npm install ytdl-mp3
+```shell
+npm install ytdl-mp3
+```
 
 ## Usage
 
@@ -14,25 +16,39 @@ The easiest way to use ytdl-mp3 is through the command-line interface. Users mus
 
     Usage: ytdl-mp3 [options] <url>
 
-    A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes. 
+    A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.
 
     Arguments:
     url                     url of video to download
 
     Options:
     -V, --version           output the version number
-    -o --output-dir <path>  path to output directory (default: "/Users/joshua/Downloads")
+    -o --output-dir <path>  path to output directory
     -n --no-get-tags        skip extracting/applying id3 tags
     -v --verify-tags        verify id3 tags fetched from itunes
     -h, --help              display help for command
 
+### ES Modules
+
+```javascript
+import { downloadSong } from 'ytdl-mp3';
+
+/** @type {string} - name with extension of file audio */
+const filename = await downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k', {
+  getTags: true,
+});
+```
+
 ### CommonJS
 
-You can also use ytdl-mp3 as a CommonJS module. For example, to achieve the same functionality as the default command line options:
+```javascript
+const { downloadSong } = require('ytdl-mp3');
 
-    const { downloadSong } = require('ytdl-mp3');
+async function main() {
+  const filename = await downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k', {
+    getTags: true,
+  });
+}
 
-    /** @type {string} - name with extension of file audio */
-    const fileName = downloadSong('https://www.youtube.com/watch?v=dQw4w9WgXcQ', {
-        getTags: true
-    })
+main();
+```

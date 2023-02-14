@@ -3,8 +3,7 @@
 const { Command } = require('commander');
 const { name, description, version } = require('../package.json');
 
-const { downloadSong } = require('../build');
-const { getDownloadsDir } = require('../build/utils');
+const { downloadSong, getDownloadsDir } = require('../dist');
 
 const program = new Command();
 program.name(name);
@@ -16,8 +15,5 @@ program.option('-o --output-dir <path>', 'path to output directory', getDownload
 program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
 program.parse();
-
-// Until latest version works
-process.env['YTDL_NO_UPDATE'] = '1';
 
 downloadSong(program.args[0], program.opts());

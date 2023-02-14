@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsup",
     "cli": "ts-node ./bin/ytdl-mp3",
+    "dev": "tsup --watch",
     "format": "prettier --write ./src/",
     "lint": "eslint --fix --ext .ts ./src/",
     "prepare": "husky install",
