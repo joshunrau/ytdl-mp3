@@ -3128,9 +3128,9 @@ natural-compare@^1.4.0:
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
 node-id3@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/node-id3/-/node-id3-0.2.5.tgz#00254f3b7ab8fbff2ea012f1546f2755bc59c96b"
-  integrity sha512-JxxZPKhquip9b2U4z3B/FhNzPwYTPIzOD0i0C9KTK2mqIWv3fdqLOnTSaLrybor0J4+QA8nXJRlw24Fp8lFeGw==
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/node-id3/-/node-id3-0.2.6.tgz#d149517bc40c7974845d31bee15177762b416ebc"
+  integrity sha512-w8GuKXLlPpDjTxLowCt/uYMhRQzED3cg2GdSG1i6RSGKeDzPvxlXeLQuQInKljahPZ0aDnmyX7FX8BbJOM7REg==
   dependencies:
     iconv-lite "0.6.2"
 
