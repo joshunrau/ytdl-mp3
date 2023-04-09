@@ -28,7 +28,7 @@ export class Downloader {
     this.verifyTags = Boolean(verifyTags);
   }
 
-  async downloadSong(url: string) {
+  async downloadSong(url: string): Promise<string> {
     if (!isDirectory(this.outputDir)) {
       throw new Error(`Not a directory: ${this.outputDir}`);
     }

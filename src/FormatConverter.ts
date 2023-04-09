@@ -12,8 +12,8 @@ export class FormatConverter {
     this.ffmpegBinary = ffmpeg;
   }
 
-  videoToAudio(videoData: Buffer, outputFile: string) {
-    return cp.execSync(`${this.ffmpegBinary} -loglevel 24 -i pipe:0 -vn -sn -c:a mp3 -ab 192k ${outputFile}`, {
+  videoToAudio(videoData: Buffer, outputFile: string): void {
+    cp.execSync(`${this.ffmpegBinary} -loglevel 24 -i pipe:0 -vn -sn -c:a mp3 -ab 192k ${outputFile}`, {
       input: videoData,
     });
   }
