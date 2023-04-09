@@ -8,8 +8,7 @@ import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import { convertVideoToAudio } from './convertVideoToAudio';
 import { extractSongTags } from './extractSongTags';
-import { getFilepaths } from './getFilepaths';
-import { isDirectory } from './utils';
+import { isDirectory, removeParenthesizedText } from './utils';
 
 export interface DownloaderOptions {
   outputDir?: string;
@@ -23,13 +22,11 @@ export class Downloader {
 
   outputDir: string;
   getTags: boolean;
-  verbose: boolean;
   verifyTags: boolean;
 
-  constructor({ outputDir, getTags, verbose, verifyTags }: DownloaderOptions) {
+  constructor({ outputDir, getTags, verifyTags }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
-    this.verbose = Boolean(verbose);
     this.verifyTags = Boolean(verifyTags);
   }
 
@@ -43,7 +40,7 @@ export class Downloader {
       });
     });
 
-    const filepaths = getFilepaths(videoInfo.videoDetails.title, this.outputDir);
+    const filepaths = this.getFilepaths(videoInfo.videoDetails.title);
     await this.downloadVideo(videoInfo, filepaths.videoFile);
     convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
 
@@ -64,5 +61,27 @@ export class Downloader {
         reject(err);
       });
     });
+  }
+
+  private getFilepaths(videoTitle: string): { audioFile: string; videoFile: string } {
+    const baseFileName = removeParenthesizedText(videoTitle)
+      .replace(/[^a-z0-9]/gi, '_')
+      .split('_')
+      .filter((element) => element)
+      .join('_')
+      .toLowerCase();
+
+    const filepaths = {
+      audioFile: path.join(this.outputDir, baseFileName + '.mp3'),
+      videoFile: path.join(this.outputDir, baseFileName + '.mp4'),
+    };
+
+    Object.values(filepaths).forEach((file) => {
+      if (fs.existsSync(file)) {
+        fs.rmSync(file);
+      }
+    });
+
+    return filepaths;
   }
 }

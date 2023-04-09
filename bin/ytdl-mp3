@@ -14,7 +14,6 @@ program.argument('<url>', 'url of video to download');
 program.option('-o --output-dir <path>', 'path to output directory', Downloader.defaultDownloadsDir);
 program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
-program.option('-V --verbose', 'provide verbose output');
 program.parse();
 
 const downloader = new Downloader(program.opts());
