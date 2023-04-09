@@ -3,7 +3,7 @@
 const { Command } = require('commander');
 const { name, description, version } = require('../package.json');
 
-const { downloadSong, getDownloadsDir } = require('../dist');
+const { Downloader } = require('../dist');
 
 const program = new Command();
 program.name(name);
@@ -11,9 +11,11 @@ program.description(description);
 program.version(version);
 program.allowExcessArguments(false);
 program.argument('<url>', 'url of video to download');
-program.option('-o --output-dir <path>', 'path to output directory', getDownloadsDir());
+program.option('-o --output-dir <path>', 'path to output directory', Downloader.defaultDownloadsDir);
 program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
+program.option('-V --verbose', 'provide verbose output');
 program.parse();
 
-downloadSong(program.args[0], program.opts());
+const downloader = new Downloader(program.opts());
+downloader.downloadSong(program.args[0]);

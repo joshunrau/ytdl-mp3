@@ -1,2 +1,2 @@
-export { downloadSong } from './downloadSong';
+export { Downloader } from './Downloader';
 export * from './utils';
