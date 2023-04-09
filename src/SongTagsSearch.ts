@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import type { MoreVideoDetails } from 'ytdl-core';
 
-import { fetchAlbumArt } from './fetchAlbumArt';
 import { removeParenthesizedText, userInput } from './utils';
 
 export interface SearchResult {
@@ -46,7 +45,7 @@ export class SongTagsSearch {
     const searchResults = await this.fetchResults();
     const result = verify ? await this.getVerifiedResult(searchResults) : searchResults[0];
     const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
-    const albumArt = await fetchAlbumArt(artworkUrl);
+    const albumArt = await this.fetchAlbumArt(artworkUrl);
     return {
       title: result.trackName,
       artist: result.artistName,
@@ -94,5 +93,14 @@ export class SongTagsSearch {
       }
     }
     throw new Error('End of results');
+  }
+
+  private async fetchAlbumArt(url: string): Promise<Buffer> {
+    return axios
+      .get(url, { responseType: 'arraybuffer' })
+      .then((response) => Buffer.from(response.data as string, 'binary'))
+      .catch(() => {
+        throw new Error('Failed to fetch album art from endpoint: ' + url);
+      });
   }
 }
