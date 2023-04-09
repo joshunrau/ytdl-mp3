@@ -1,11 +1,12 @@
+import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
+import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import { convertVideoToAudio } from './convertVideoToAudio';
-import { downloadVideo } from './downloadVideo';
 import { extractSongTags } from './extractSongTags';
 import { getFilepaths } from './getFilepaths';
 import { isDirectory } from './utils';
@@ -43,7 +44,7 @@ export class Downloader {
     });
 
     const filepaths = getFilepaths(videoInfo.videoDetails.title, this.outputDir);
-    await downloadVideo(videoInfo, filepaths.videoFile);
+    await this.downloadVideo(videoInfo, filepaths.videoFile);
     convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
 
     if (this.getTags) {
@@ -53,5 +54,15 @@ export class Downloader {
 
     console.log(`Done! Output file: ${filepaths.audioFile}`);
     return filepaths.audioFile;
+  }
+
+  async downloadVideo(videoInfo: VideoInfo, outputFile: string) {
+    const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' }).pipe(fs.createWriteStream(outputFile));
+    return new Promise((resolve, reject) => {
+      stream.on('finish', resolve);
+      stream.on('error', (err) => {
+        reject(err);
+      });
+    });
   }
 }
