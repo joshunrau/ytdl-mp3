@@ -1,9 +1,9 @@
 import type { videoInfo as VideoInfo } from 'ytdl-core';
 
-import fetchAlbumArt from './fetchAlbumArt';
-import fetchSearchResults from './fetchSearchResults';
+import { fetchAlbumArt } from './fetchAlbumArt';
+import { fetchSearchResults } from './fetchSearchResults';
 import { removeParenthesizedText } from './utils';
-import verifySearchResult from './verifySearchResult';
+import { verifySearchResult } from './verifySearchResult';
 
 interface AlbumArt {
   mime: string;
@@ -21,7 +21,7 @@ interface SongTags {
   image: AlbumArt;
 }
 
-export default async function extractSongTags(videoInfo: VideoInfo, verify?: boolean): Promise<SongTags> {
+export async function extractSongTags(videoInfo: VideoInfo, verify?: boolean): Promise<SongTags> {
   const searchTerm = removeParenthesizedText(videoInfo.videoDetails.title);
   const results = await fetchSearchResults(searchTerm);
 

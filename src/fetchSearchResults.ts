@@ -11,7 +11,7 @@ export interface SearchData {
   results: SearchResult[];
 }
 
-export default async function fetchSearchResults(searchTerm: string): Promise<SearchResult[]> {
+export async function fetchSearchResults(searchTerm: string): Promise<SearchResult[]> {
   const url = new URL('https://itunes.apple.com/search?');
   url.searchParams.set('media', 'music');
   url.searchParams.set('term', searchTerm);

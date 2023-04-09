@@ -1,10 +1,10 @@
 import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 
-import convertVideoToAudio from './convertVideoToAudio';
-import downloadVideo from './downloadVideo';
-import extractSongTags from './extractSongTags';
-import getFilepaths from './getFilepaths';
+import { convertVideoToAudio } from './convertVideoToAudio';
+import { downloadVideo } from './downloadVideo';
+import { extractSongTags } from './extractSongTags';
+import { getFilepaths } from './getFilepaths';
 import { getDownloadsDir, isDirectory } from './utils';
 
 interface Options {
@@ -13,7 +13,7 @@ interface Options {
   verifyTags?: boolean;
 }
 
-export default async function downloadSong(url: string, options?: Options): Promise<string> {
+export async function downloadSong(url: string, options?: Options): Promise<string> {
   if (options?.outputDir && !isDirectory(options.outputDir)) {
     throw new Error(`Not a directory: ${options.outputDir}`);
   }

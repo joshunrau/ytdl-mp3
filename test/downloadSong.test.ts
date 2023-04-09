@@ -1,4 +1,4 @@
-import downloadSong from '../src/downloadSong';
+import { downloadSong } from '../src/downloadSong';
 import { getDownloadsDir } from '../src/utils';
 
 const url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function fetchAlbumArt(url: string): Promise<Buffer> {
+export function fetchAlbumArt(url: string): Promise<Buffer> {
   return axios
     .get(url, { responseType: 'arraybuffer' })
     .then((response) => Buffer.from(response.data as string, 'binary'))
