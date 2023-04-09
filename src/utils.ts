@@ -1,11 +1,5 @@
 import fs from 'fs';
-import os from 'os';
-import path from 'path';
 import readline from 'readline';
-
-export function getDownloadsDir(): string {
-  return path.join(os.homedir(), 'Downloads');
-}
 
 export function removeParenthesizedText(s: string): string {
   return s.replace(/\s*[([].*?[)\]]\s*/g, '');

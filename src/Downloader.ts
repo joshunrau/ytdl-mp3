@@ -55,7 +55,7 @@ export class Downloader {
   }
 
   /** Returns the content from the video as a buffer */
-  async downloadVideo(videoInfo: VideoInfo): Promise<Buffer> {
+  private async downloadVideo(videoInfo: VideoInfo): Promise<Buffer> {
     const buffers: Buffer[] = [];
     const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' }); // .pipe(fs.createWriteStream(outputFile));
     return new Promise((resolve, reject) => {

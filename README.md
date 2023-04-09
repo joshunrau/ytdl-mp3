@@ -33,23 +33,25 @@ Options:
 ### ESM
 
 ```javascript
-import { downloadSong } from 'ytdl-mp3';
+import { Downloader } from 'ytdl-mp3';
 
-/** @type {string} - name with extension of file audio */
-const filename = await downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k', {
+const downloader = new Downloader({
   getTags: true,
 });
+
+await downloader.downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k');
 ```
 
 ### CommonJS
 
 ```javascript
-const { downloadSong } = require('ytdl-mp3');
+const { Downloader } = require('ytdl-mp3');
 
 async function main() {
-  const filename = await downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k', {
+  const downloader = new Downloader({
     getTags: true,
   });
+  await downloader.downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k');
 }
 
 main();
