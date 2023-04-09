@@ -5,27 +5,24 @@ import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 import type { videoInfo as VideoInfo } from 'ytdl-core';
 
-import { extractSongTags } from './extractSongTags';
 import { FormatConverter } from './FormatConverter';
+import { SongTagsSearch } from './SongTagsSearch';
 import { isDirectory, removeParenthesizedText } from './utils';
 
 export interface DownloaderOptions {
   outputDir?: string;
   getTags?: boolean;
-  verbose?: boolean;
   verifyTags?: boolean;
 }
 
 export class Downloader {
   static defaultDownloadsDir = path.join(os.homedir(), 'Downloads');
 
-  formatConverter: FormatConverter;
   outputDir: string;
   getTags: boolean;
   verifyTags: boolean;
 
   constructor({ outputDir, getTags, verifyTags }: DownloaderOptions) {
-    this.formatConverter = new FormatConverter();
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
     this.verifyTags = Boolean(verifyTags);
@@ -41,13 +38,15 @@ export class Downloader {
       });
     });
 
+    const formatConverter = new FormatConverter();
+    const songTagsSearch = new SongTagsSearch(videoInfo.videoDetails);
+
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
     const videoData = await this.downloadVideo(videoInfo);
 
-    this.formatConverter.videoToAudio(videoData, outputFile);
-
+    formatConverter.videoToAudio(videoData, outputFile);
     if (this.getTags) {
-      const songTags = await extractSongTags(videoInfo, this.verifyTags);
+      const songTags = await songTagsSearch.search(this.verifyTags);
       NodeID3.write(songTags, outputFile);
     }
 
