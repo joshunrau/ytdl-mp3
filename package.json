@@ -17,7 +17,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && tsup",
-    "cli": "ts-node ./bin/ytdl-mp3",
+    "cli": "node ./bin/ytdl-mp3",
     "dev": "tsup --watch",
     "format": "prettier --write ./src/",
     "lint": "eslint --fix --ext .ts ./src/",

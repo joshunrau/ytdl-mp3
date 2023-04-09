@@ -1,4 +1,3 @@
-import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
@@ -6,8 +5,8 @@ import NodeID3 from 'node-id3';
 import ytdl from 'ytdl-core';
 import type { videoInfo as VideoInfo } from 'ytdl-core';
 
-import { convertVideoToAudio } from './convertVideoToAudio';
 import { extractSongTags } from './extractSongTags';
+import { FormatConverter } from './FormatConverter';
 import { isDirectory, removeParenthesizedText } from './utils';
 
 export interface DownloaderOptions {
@@ -20,11 +19,13 @@ export interface DownloaderOptions {
 export class Downloader {
   static defaultDownloadsDir = path.join(os.homedir(), 'Downloads');
 
+  formatConverter: FormatConverter;
   outputDir: string;
   getTags: boolean;
   verifyTags: boolean;
 
   constructor({ outputDir, getTags, verifyTags }: DownloaderOptions) {
+    this.formatConverter = new FormatConverter();
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
     this.verifyTags = Boolean(verifyTags);
@@ -40,48 +41,45 @@ export class Downloader {
       });
     });
 
-    const filepaths = this.getFilepaths(videoInfo.videoDetails.title);
-    await this.downloadVideo(videoInfo, filepaths.videoFile);
-    convertVideoToAudio(filepaths.videoFile, filepaths.audioFile);
+    const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
+    const videoData = await this.downloadVideo(videoInfo);
+
+    this.formatConverter.videoToAudio(videoData, outputFile);
 
     if (this.getTags) {
       const songTags = await extractSongTags(videoInfo, this.verifyTags);
-      NodeID3.write(songTags, filepaths.audioFile);
+      NodeID3.write(songTags, outputFile);
     }
 
-    console.log(`Done! Output file: ${filepaths.audioFile}`);
-    return filepaths.audioFile;
+    console.log(`Done! Output file: ${outputFile}`);
+    return outputFile;
   }
 
-  async downloadVideo(videoInfo: VideoInfo, outputFile: string) {
-    const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' }).pipe(fs.createWriteStream(outputFile));
+  /** Returns the content from the video as a buffer */
+  async downloadVideo(videoInfo: VideoInfo): Promise<Buffer> {
+    const buffers: Buffer[] = [];
+    const stream = ytdl.downloadFromInfo(videoInfo, { quality: 'highestaudio' }); // .pipe(fs.createWriteStream(outputFile));
     return new Promise((resolve, reject) => {
-      stream.on('finish', resolve);
+      stream.on('data', (chunk: Buffer) => {
+        buffers.push(chunk);
+      });
+      stream.on('end', () => {
+        resolve(Buffer.concat(buffers));
+      });
       stream.on('error', (err) => {
         reject(err);
       });
     });
   }
 
-  private getFilepaths(videoTitle: string): { audioFile: string; videoFile: string } {
+  /** Returns the absolute path to the audio file to be downloaded */
+  private getOutputFile(videoTitle: string): string {
     const baseFileName = removeParenthesizedText(videoTitle)
       .replace(/[^a-z0-9]/gi, '_')
       .split('_')
       .filter((element) => element)
       .join('_')
       .toLowerCase();
-
-    const filepaths = {
-      audioFile: path.join(this.outputDir, baseFileName + '.mp3'),
-      videoFile: path.join(this.outputDir, baseFileName + '.mp4'),
-    };
-
-    Object.values(filepaths).forEach((file) => {
-      if (fs.existsSync(file)) {
-        fs.rmSync(file);
-      }
-    });
-
-    return filepaths;
+    return path.join(this.outputDir, baseFileName + '.mp3');
   }
 }
