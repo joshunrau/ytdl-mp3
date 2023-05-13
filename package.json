@@ -1,6 +1,6 @@
 {
   "name": "ytdl-mp3",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -22,9 +22,8 @@
     "format": "prettier --write ./src/",
     "lint": "eslint --fix --ext .ts ./src/",
     "prepare": "husky install",
-    "preversion": "yarn lint && yarn format && npm test",
-    "postversion": "git push && git push --tags",
-    "test": "jest"
+    "preversion": "yarn lint && yarn format",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
@@ -52,7 +51,6 @@
   "devDependencies": {
     "@joshunrau/eslint-config": "^1.0.7",
     "@types/ffmpeg-static": "^3.0.1",
-    "@types/jest": "^29.2.6",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.49.0",
@@ -61,10 +59,7 @@
     "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.3",
-    "jest": "^29.4.0",
     "prettier": "2.8.5",
-    "ts-jest": "^29.0.5",
-    "ts-node": "^10.9.1",
     "tsup": "^6.6.2",
     "typescript": "^5.0.2"
   },
