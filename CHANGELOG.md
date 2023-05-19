@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.0] - 2023-05-18
+
+### Added 
+- Log search term to stdout
+- Throw if output file exists
+
 ## [3.0.1] - 2023-05-13
 
 ### Changed
