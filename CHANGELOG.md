@@ -5,6 +5,8 @@
 ### Added 
 - Log search term to stdout
 - Throw if output file exists
+- Add custom `YtdlMp3Error` exception
+- Catch `YtdlMp3Error` with nice formatting for cli users
 
 ## [3.0.1] - 2023-05-13
 
