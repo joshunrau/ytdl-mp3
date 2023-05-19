@@ -16,13 +16,17 @@ program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
 program.parse();
 
-try {
-  const downloader = new Downloader(program.opts());
-  downloader.downloadSong(program.args[0]);
-} catch (err) {
-  if (err instanceof YtdlMp3Error) {
-    console.error(err.message);
-    process.exit(1);
+async function main() {
+  try {
+    const downloader = new Downloader(program.opts());
+    await downloader.downloadSong(program.args[0]);
+  } catch (err) {
+    if (err instanceof YtdlMp3Error) {
+      console.error(`ERROR: ${err.message}`);
+      process.exit(1);
+    }
+    throw err;
   }
-  throw err;
 }
+
+main()
