@@ -3,7 +3,7 @@
 const { Command } = require('commander');
 const { name, description, version } = require('../package.json');
 
-const { Downloader } = require('../dist');
+const { Downloader, YtdlMp3Error } = require('../dist');
 
 const program = new Command();
 program.name(name);
@@ -16,5 +16,13 @@ program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
 program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
 program.parse();
 
-const downloader = new Downloader(program.opts());
-downloader.downloadSong(program.args[0]);
+try {
+  const downloader = new Downloader(program.opts());
+  downloader.downloadSong(program.args[0]);
+} catch (err) {
+  if (err instanceof YtdlMp3Error) {
+    console.error(err.message);
+    process.exit(1);
+  }
+  throw err;
+}
