@@ -27,3 +27,10 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
     rl.write(defaultInput || '');
   });
 }
+
+export class YtdlMp3Error extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = ' YtdlMp3Error';
+  }
+}
