@@ -7,7 +7,7 @@ import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import { FormatConverter } from './FormatConverter';
 import { SongTagsSearch } from './SongTagsSearch';
-import { isDirectory, removeParenthesizedText } from './utils';
+import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 
 export interface DownloaderOptions {
   outputDir?: string;
@@ -30,10 +30,10 @@ export class Downloader {
 
   async downloadSong(url: string): Promise<string> {
     if (!isDirectory(this.outputDir)) {
-      throw new Error(`Not a directory: ${this.outputDir}`);
+      throw new YtdlMp3Error(`Not a directory: ${this.outputDir}`);
     }
     const videoInfo = await ytdl.getInfo(url).catch((error) => {
-      throw new Error(`Failed to fetch info for video with URL: ${url}`, {
+      throw new YtdlMp3Error(`Failed to fetch info for video with URL: ${url}`, {
         cause: error,
       });
     });

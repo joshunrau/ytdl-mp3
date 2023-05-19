@@ -21,7 +21,7 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
       if (response) {
         resolve(response);
       } else {
-        reject(new Error('Invalid response: ' + response));
+        reject(new YtdlMp3Error('Invalid response: ' + response));
       }
     });
     rl.write(defaultInput || '');
@@ -29,8 +29,8 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
 }
 
 export class YtdlMp3Error extends Error {
-  constructor(message: string) {
-    super(message);
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
     this.name = ' YtdlMp3Error';
   }
 }

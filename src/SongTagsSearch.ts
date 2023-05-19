@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import type { MoreVideoDetails } from 'ytdl-core';
 
-import { removeParenthesizedText, userInput } from './utils';
+import { YtdlMp3Error, removeParenthesizedText, userInput } from './utils';
 
 export interface SearchResult {
   artistName: string;
@@ -65,13 +65,13 @@ export class SongTagsSearch {
   private async fetchResults(): Promise<SearchResult[]> {
     const response = await axios.get<SearchData>(this.url.href).catch((error: AxiosError) => {
       if (error.response?.status) {
-        throw new Error(`Call to iTunes API returned status code ${error.response.status}`);
+        throw new YtdlMp3Error(`Call to iTunes API returned status code ${error.response.status}`);
       }
-      throw new Error('Call to iTunes API failed and did not return a status');
+      throw new YtdlMp3Error('Call to iTunes API failed and did not return a status');
     });
 
     if (response.data.resultCount === 0) {
-      throw new Error('Call to iTunes API did not return any results');
+      throw new YtdlMp3Error('Call to iTunes API did not return any results');
     }
 
     return response.data.results;
@@ -93,7 +93,7 @@ export class SongTagsSearch {
         return result;
       }
     }
-    throw new Error('End of results');
+    throw new YtdlMp3Error('End of results');
   }
 
   private async fetchAlbumArt(url: string): Promise<Buffer> {
@@ -101,7 +101,7 @@ export class SongTagsSearch {
       .get(url, { responseType: 'arraybuffer' })
       .then((response) => Buffer.from(response.data as string, 'binary'))
       .catch(() => {
-        throw new Error('Failed to fetch album art from endpoint: ' + url);
+        throw new YtdlMp3Error('Failed to fetch album art from endpoint: ' + url);
       });
   }
 }
