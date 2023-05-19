@@ -31,6 +31,6 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
 export class YtdlMp3Error extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
-    this.name = ' YtdlMp3Error';
+    this.name = 'YtdlMp3Error';
   }
 }
