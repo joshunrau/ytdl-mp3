@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { type AxiosError } from 'axios';
 import type { MoreVideoDetails } from 'ytdl-core';
 
 import { YtdlMp3Error, removeParenthesizedText, userInput } from './utils';
