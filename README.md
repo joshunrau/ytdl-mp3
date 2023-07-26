@@ -1,6 +1,6 @@
 # ytdl-mp3
 
-A NodeJS package and command-line tool for downloading music from YouTube, including automatic retrieval of ID3 tags and album art via iTunes.
+An NPM package to facilitate downloading music from YouTube, including automatic retrieval of ID3 tags and album art via the iTunes public API.
 
 ## Installation
 
