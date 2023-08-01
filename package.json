@@ -54,7 +54,7 @@
     "commander": "^11.0.0",
     "ffmpeg-static": "^5.1.0",
     "node-id3": "^0.2.6",
-    "ytdl-core": "4.11.4"
+    "ytdl-core": "4.11.5"
   },
   "devDependencies": {
     "@joshunrau/eslint-config": "^2.1.3",
