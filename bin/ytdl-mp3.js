@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
+import { createRequire } from 'node:module';
+import { Command } from 'commander';
+import { Downloader, YtdlMp3Error } from '../dist/index.js'
+
+const require = createRequire(import.meta.url);
 const { name, description, version } = require('../package.json');
 
-const { Downloader, YtdlMp3Error } = require('../dist');
 
 const program = new Command();
 program.name(name);
