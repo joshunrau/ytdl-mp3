@@ -5,7 +5,7 @@ An NPM package to facilitate downloading music from YouTube, including automatic
 ## Installation
 
 ```shell
-npm install ytdl-mp3
+npm install -g ytdl-mp3
 ```
 
 ## Usage
