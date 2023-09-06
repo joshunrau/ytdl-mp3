@@ -1,12 +1,8 @@
 #!/usr/bin/env node
 
-import { createRequire } from 'node:module';
-import { Command } from 'commander';
-import { Downloader, YtdlMp3Error } from '../dist/index.js'
-
-const require = createRequire(import.meta.url);
+const { Command } = require('commander');
+const { Downloader, YtdlMp3Error } = require('../dist/index.cjs');
 const { name, description, version } = require('../package.json');
-
 
 const program = new Command();
 program.name(name);
@@ -32,4 +28,4 @@ async function main() {
   }
 }
 
-main()
+main();
