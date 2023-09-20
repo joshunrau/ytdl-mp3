@@ -1,7 +1,9 @@
 import { Command } from 'commander';
+
+import { description, name, version } from '../package.json';
+
 import { Downloader } from './Downloader';
 import { YtdlMp3Error } from './utils';
-import { name, description, version } from '../package.json';
 
 const program = new Command();
 program.name(name);
