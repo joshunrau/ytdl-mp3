@@ -1,8 +1,0 @@
-{
-  "extends": ["@joshunrau/eslint-config/node", "prettier"],
-  "plugins": ["import"],
-  "ignorePatterns": ["bin", "dist"],
-  "parserOptions": {
-    "project": ["./tsconfig.json"]
-  }
-}
