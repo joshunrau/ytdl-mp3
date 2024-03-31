@@ -7,64 +7,69 @@ on:
 env:
   CARGO_TERM_COLOR: always
 jobs:
+  configure:
+    runs-on: ubuntu-latest
+    outputs:
+      package_name: ${{ steps.define.outputs.PACKAGE_NAME }}
+      package_version: ${{ steps.define.outputs.PACKAGE_VERSION }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - id: define
+        run: |
+          echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" >> "$GITHUB_OUTPUT"
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> "$GITHUB_OUTPUT"
   create-release:
+    runs-on: ubuntu-latest
+    needs: [configure]
     permissions:
       contents: write
-    runs-on: ubuntu-20.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Get Package Metadata
-        run: |
-          echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" >> $GITHUB_ENV
-          echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
       - name: Create Release
         uses: actions/github-script@v7
         with:
           script: |
-            require('./.github/scripts/release.cjs')({ context, github })
+            const { createRelease } = require('./.github/scripts/release.cjs');
+            return await createRelease({ context, github }, {
+              packageName: '${{ needs.configure.outputs.package_name }}',
+              packageVersion: '${{ needs.configure.outputs.package_version }}'
+            });
   build:
-    needs: create-release
+    needs: [configure, create-release]
     permissions:
       contents: write
+    env:
+      CC: clang
+      CXX: clang++
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         platform:
-          - os: 'ubuntu-20.04'
-            target: 'x86_64-unknown-linux-musl'
-            arch: 'x86_64'
-            libc: 'musl'
-          - os: 'ubuntu-20.04'
+          # - os: 'ubuntu-latest'
+          #   target: 'x86_64-unknown-linux-musl'
+          - os: 'ubuntu-latest'
             target: 'aarch64-unknown-linux-musl'
-            arch: 'aarch64'
-            libc: 'musl'
-          - os: 'ubuntu-20.04'
-            target: 'x86_64-unknown-linux-gnu'
-            arch: 'x86_64'
-            libc: 'gnu'
-          - os: 'ubuntu-20.04'
-            target: 'aarch64-unknown-linux-gnu'
-            arch: 'aarch64'
-            libc: 'gnu'
-          - os: 'macos-latest'
-            target: 'x86_64-apple-darwin'
-            arch: 'x86_64'
-          - os: 'macos-latest'
-            arch: 'aarch64'
-            target: 'aarch64-apple-darwin'
+          #   target: 'x86_64-unknown-linux-gnu'
+          # - os: 'ubuntu-latest'
+          #   target: 'aarch64-unknown-linux-gnu'
+          # - os: 'macos-latest'
+          #   target: 'x86_64-apple-darwin'
+          # - os: 'macos-latest'
+          #   target: 'aarch64-apple-darwin'
     runs-on: ${{ matrix.platform.os }}
     steps:
-      - name: Enable ARM64 Architecture (Ubuntu Only)
-        if: ${{ matrix.platform.target == 'arch64-unknown-linux-gnu' || matrix.platform.target == 'aarch64-unknown-linux-musl' }}
-        run: sudo dpkg --add-architecture arm64 && sudo apt-get update && sudo apt-get install gcc-aarch64-linux-gnu
-      - name: Install Musl Tools (If Required)
-        if: ${{ matrix.platform.libc == 'musl' }}
-        run: sudo apt-get update && sudo apt-get install musl-tools
       - name: Checkout Repository
         uses: actions/checkout@v4
+      - name: Install System Dependencies (Ubuntu Only)
+        if: matrix.platform.os == 'ubuntu-latest'
+        run: |
+          sudo dpkg --add-architecture arm64
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev pkg-config
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -74,7 +79,30 @@ jobs:
       - name: Compile Binary
         run: cargo build --bins --release --target ${{ matrix.platform.target }}
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.env.PACKAGE_NAME }}-${{ matrix.platform.target }}
-          path: ./target/release/${{ github.env.PACKAGE_NAME }}
+          name: ${{ needs.configure.outputs.package_name }}-${{ matrix.platform.target }}
+          path: ./target/${{ matrix.platform.target }}/release/${{ needs.configure.outputs.package_name }}
+  publish-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    needs: [configure, create-release, build]
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+      - name: Display Structure of Downloaded Files
+        run: ls -R
+      # - name: Publish Release
+      #   id: publish-release
+      #   uses: actions/github-script@v7
+      #   env:
+      #     release_id: ${{ needs.create-release.outputs.release_id }}
+      #   with:
+      #     script: |
+      #       github.rest.repos.updateRelease({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         release_id: process.env.release_id,
+      #         draft: false,
+      #       })

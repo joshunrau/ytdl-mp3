@@ -1,20 +1,29 @@
 // @ts-check
 
-/** @param {Pick<import('github-script').AsyncFunctionArguments, "context" | "github">} args */
-module.exports = async ({ context, github }) => {
-  const { PACKAGE_NAME, PACKAGE_VERSION } = process.env;
-  if (!PACKAGE_NAME) {
-    throw new Error(`Environment variable must be defined: 'PACKAGE_NAME'`);
-  } else if (!PACKAGE_VERSION) {
-    throw new Error(`Environment variable must be defined: 'PACKAGE_VERSION'`);
+/**
+ * Create a draft release and return the ID
+ * @param {Pick<import('github-script').AsyncFunctionArguments, "context" | "github">} args
+ * @param {{ packageName: string, packageVersion: string }} options
+ * @returns {Promise<number>}
+ */
+async function createRelease({ context, github }, { packageName, packageVersion }) {
+  if (!packageName) {
+    throw new Error("Option 'packageName' must be defined");
+  } else if (!packageVersion) {
+    throw new Error("Option 'packageVersion' must be defined");
   }
-  await github.rest.repos.createRelease({
+  const { data } = await github.rest.repos.createRelease({
     body: 'Please download the appropriate binary for your system and move it somewhere in your path.',
     draft: true,
-    name: `${PACKAGE_NAME} v${PACKAGE_VERSION}`,
+    name: `${packageName} v${packageVersion}`,
     owner: context.repo.owner,
-    prerelease: PACKAGE_VERSION.split('-').length > 1,
+    prerelease: packageVersion.split('-').length > 1,
     repo: context.repo.repo,
-    tag_name: `${PACKAGE_NAME}-v${PACKAGE_VERSION}`
+    tag_name: `${packageName}-v${packageVersion}`
   });
+  return data.id;
+}
+
+module.exports = {
+  createRelease
 };

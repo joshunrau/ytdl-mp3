@@ -12,3 +12,6 @@ clap = { version = "4.5.4", features = ["derive", "wrap_help"] }
 neon = "1"
 rustube = "0.6.0"
 tokio = { version = "1.4.0", features = ["full"] }
+
+[target.'cfg(target_env = "musl")'.dependencies]
+openssl = { version = "0.10", features = ["vendored"] }
