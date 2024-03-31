@@ -55,8 +55,11 @@
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
     "@joshunrau/eslint-config": "^4.2.0",
     "@joshunrau/prettier-config": "^0.3.0",
+    "@joshunrau/semantic-release": "^0.1.0",
     "@joshunrau/tsconfig": "^0.0.3",
     "@types/ffmpeg-static": "^3.0.3",
     "@types/github-script": "github:actions/github-script",
@@ -67,5 +70,15 @@
     "prettier": "^3.2.5",
     "typescript": "~5.4.3"
   },
-  "prettier": "@joshunrau/prettier-config"
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "prettier": "@joshunrau/prettier-config",
+  "release": {
+    "extends": [
+      "@joshunrau/semantic-release"
+    ]
+  }
 }
