@@ -24,7 +24,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            require('./.github/scripts/release.cjs')()
+            require('./.github/scripts/release.cjs')({ context, github })
   build:
     needs: create-release
     permissions:

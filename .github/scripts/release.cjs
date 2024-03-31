@@ -1,6 +1,6 @@
 // @ts-check
 
-/** @param {import('github-script').AsyncFunctionArguments} args */
+/** @param {Pick<import('github-script').AsyncFunctionArguments, "context" | "github">} args */
 module.exports = async ({ context, github }) => {
   const { PACKAGE_NAME, PACKAGE_VERSION } = process.env;
   if (!PACKAGE_NAME) {
