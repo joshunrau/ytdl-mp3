@@ -67,9 +67,8 @@ jobs:
       - name: Install System Dependencies (Ubuntu Only)
         if: matrix.platform.os == 'ubuntu-latest'
         run: |
-          sudo dpkg --add-architecture arm64
           sudo apt-get update
-          sudo apt-get install -y libssl-dev pkg-config
+          sudo apt-get install -y libssl-dev pkg-config perl
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
