@@ -1,63 +1,71 @@
 {
   "name": "ytdl-mp3",
-  "version": "3.4.1",
+  "type": "module",
+  "version": "4.0.0-beta.0",
   "description": "A ytdl-core wrapper that includes automatic retrieval of ID3 tags and album art via the iTunes public API",
+  "author": "Joshua Unrau",
+  "license": "MIT",
+  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshunrau/ytdl-mp3.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joshunrau/ytdl-mp3/issues"
+  },
   "keywords": [
     "youtube",
     "download",
     "mp3",
     "music"
   ],
-  "homepage": "https://github.com/joshunrau/ytdl-mp3#readme",
-  "bugs": {
-    "url": "https://github.com/joshunrau/ytdl-mp3/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/joshunrau/ytdl-mp3.git"
-  },
-  "license": "MIT",
-  "author": "Joshua Unrau",
-  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./dist/index.node"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.node",
+  "types": "./lib/index.d.ts",
   "bin": {
     "ytdl-mp3": "./bin/ytdl-mp3.cjs"
   },
   "files": [
-    "bin",
-    "dist",
     "LICENSE",
     "README.md",
+    "bin",
+    "dist",
+    "lib",
     "package.json"
   ],
   "scripts": {
     "build": "tsup",
+    "compile": "cargo-cp-artifact --npm cdylib ./dist/index.node -- cargo build --message-format=json-render-diagnostics",
+    "compile:debug": "pnpm compile --",
+    "compile:release": "pnpm compile -- --release",
     "format": "prettier --write src",
-    "lint": "eslint --fix src",
+    "lint": "tsc && eslint --fix src",
     "prepare": "husky"
   },
   "dependencies": {
     "axios": "^1.6.8",
-    "commander": "^12.0.0",
     "ffmpeg-static": "^5.2.0",
     "node-id3": "^0.2.6",
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
+    "@joshunrau/eslint-config": "^4.2.0",
+    "@joshunrau/prettier-config": "^0.3.0",
+    "@joshunrau/tsconfig": "^0.0.3",
     "@types/ffmpeg-static": "^3.0.3",
+    "@types/github-script": "github:actions/github-script",
     "@types/node": "^20.12.2",
-    "esbuild": "^0.20.2",
+    "cargo-cp-artifact": "^0.1.8",
+    "eslint": "^8.57.0",
     "husky": "^9.0.11",
-    "tsup": "^8.0.2",
+    "prettier": "^3.2.5",
     "typescript": "~5.4.3"
-  }
+  },
+  "prettier": "@joshunrau/prettier-config"
 }

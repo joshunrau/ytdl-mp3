@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.0]
+
+### BREAKING CHANGES
+- Remove `--no-get-tags` option
+- Remove `--verify-tags` option
+- Remove `--verbose` option, replaced by `--log-level=verbose`
+
 ## [3.4.1] - 2023-09-14
 
 ### Changed

@@ -1,7 +1,6 @@
 import { Command } from 'commander';
 
-import { description, name, version } from '../package.json';
-
+import { description, name, version } from '../../package.json';
 import { Downloader } from './Downloader';
 import { YtdlMp3Error } from './utils';
 
@@ -21,10 +20,10 @@ export async function main() {
   const options = program.opts();
   try {
     const downloader = new Downloader(options);
-    await downloader.downloadSong(program.args[0]);
+    await downloader.downloadSong(program.args[0]!);
   } catch (err) {
     if (err instanceof YtdlMp3Error) {
-      if (options.verbose) {
+      if (options['verbose']) {
         console.error(err.cause);
         console.error(err.stack);
       }

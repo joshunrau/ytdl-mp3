@@ -1,0 +1,14 @@
+[package]
+name = "ytdl-mp3"
+version = "4.0.0-beta.0"
+license = "MIT"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+clap = { version = "4.5.4", features = ["derive", "wrap_help"] }
+neon = "1"
+rustube = "0.6.0"
+tokio = { version = "1.4.0", features = ["full"] }

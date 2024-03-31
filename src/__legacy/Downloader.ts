@@ -9,20 +9,20 @@ import { FormatConverter } from './FormatConverter';
 import { SongTagsSearch } from './SongTagsSearch';
 import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 
-export interface DownloaderOptions {
-  outputDir?: string;
+export type DownloaderOptions = {
   getTags?: boolean;
+  outputDir?: string;
   verifyTags?: boolean;
 }
 
 export class Downloader {
   static defaultDownloadsDir = path.join(os.homedir(), 'Downloads');
 
-  outputDir: string;
   getTags: boolean;
+  outputDir: string;
   verifyTags: boolean;
 
-  constructor({ outputDir, getTags, verifyTags }: DownloaderOptions) {
+  constructor({ getTags, outputDir, verifyTags }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
     this.verifyTags = Boolean(verifyTags);
@@ -34,7 +34,7 @@ export class Downloader {
     }
     const videoInfo = await ytdl.getInfo(url).catch((error) => {
       throw new YtdlMp3Error(`Failed to fetch info for video with URL: ${url}`, {
-        cause: error,
+        cause: error
       });
     });
 

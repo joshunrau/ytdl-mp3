@@ -12,7 +12,7 @@ export function isDirectory(dirPath: string): boolean {
 export async function userInput(prompt: string, defaultInput?: string): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout,
+    output: process.stdout
   });
 
   return new Promise((resolve, reject) => {
