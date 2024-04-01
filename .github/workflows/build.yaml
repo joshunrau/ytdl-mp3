@@ -8,7 +8,7 @@ env:
   CARGO_TERM_COLOR: always
 jobs:
   configure:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       package_name: ${{ steps.define.outputs.PACKAGE_NAME }}
       package_version: ${{ steps.define.outputs.PACKAGE_VERSION }}
@@ -20,7 +20,7 @@ jobs:
           echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" >> "$GITHUB_OUTPUT"
           echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> "$GITHUB_OUTPUT"
   create-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [configure]
     permissions:
       contents: write
@@ -49,12 +49,12 @@ jobs:
       fail-fast: true
       matrix:
         platform:
-          # - os: 'ubuntu-latest'
+          # - os: 'ubuntu-22.04'
           #   target: 'x86_64-unknown-linux-musl'
-          - os: 'ubuntu-latest'
+          - os: 'ubuntu-22.04'
             target: 'aarch64-unknown-linux-musl'
           #   target: 'x86_64-unknown-linux-gnu'
-          # - os: 'ubuntu-latest'
+          # - os: 'ubuntu-22.04'
           #   target: 'aarch64-unknown-linux-gnu'
           # - os: 'macos-latest'
           #   target: 'x86_64-apple-darwin'
@@ -65,10 +65,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Install System Dependencies (Ubuntu Only)
-        if: matrix.platform.os == 'ubuntu-latest'
+        if: matrix.platform.os == 'ubuntu-22.04'
         run: |
-          sudo apt-get update
-          sudo apt-get install -y libssl-dev pkg-config perl librust-openssl-dev
+          grep ^deb /etc/apt/sources.list | sed 's/deb /deb [arch=amd64] /' | tee /tmp/sources.list
+          mv /tmp/sources.list /etc/apt/sources.list
+          dpkg --add-architecture arm64
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          apt-get update
+          apt-get install libssl-dev libssl-dev:arm64
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -85,7 +97,7 @@ jobs:
   publish-release:
     permissions:
       contents: write
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [configure, create-release, build]
     steps:
       - name: Download Artifact
