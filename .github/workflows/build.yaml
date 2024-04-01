@@ -69,16 +69,16 @@ jobs:
         run: |
           grep ^deb /etc/apt/sources.list | sed 's/deb /deb [arch=amd64] /' | tee /tmp/sources.list
           sudo mv /tmp/sources.list /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  | sudo tee -a /etc/apt/sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  | sudo tee -a /etc/apt/sources.list
           sudo dpkg --add-architecture arm64
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
           sudo apt-get update
           sudo apt-get install pkg-config libssl-dev libssl-dev:arm64
       - name: Install Rust

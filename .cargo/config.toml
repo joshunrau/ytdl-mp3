@@ -1,2 +1,2 @@
-[target.'cfg(target_env = "musl")']
-rustflags = ["-C", "linker=ld.lld", "-C", "link-self-contained=yes", "-C", ]
+# [target.'cfg(target_env = "musl")']
+# rustflags = ["-C", "linker=ld.lld", "-C", "link-self-contained=yes", "-C", ]
