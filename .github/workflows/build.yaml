@@ -80,7 +80,7 @@ jobs:
           echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  | sudo tee -a /etc/apt/sources.list
           sudo dpkg --add-architecture arm64
           sudo apt-get update
-          sudo apt-get install pkg-config libssl-dev libssl-dev:arm64
+          sudo apt-get install -y pkg-config libssl-dev libssl-dev:arm64
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
