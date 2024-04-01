@@ -17,8 +17,8 @@ jobs:
         uses: actions/checkout@v4
       - id: define
         run: |
-          echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" >> "$GITHUB_OUTPUT"
-          echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> "$GITHUB_OUTPUT"
+          echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" | sudo tee -a "$GITHUB_OUTPUT"
+          echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" | sudo tee -a "$GITHUB_OUTPUT"
   create-release:
     runs-on: ubuntu-22.04
     needs: [configure]
@@ -70,15 +70,15 @@ jobs:
           grep ^deb /etc/apt/sources.list | sed 's/deb /deb [arch=amd64] /' | tee /tmp/sources.list
           sudo mv /tmp/sources.list /etc/apt/sources.list
           sudo dpkg --add-architecture arm64
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
+          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  | sudo tee -a /etc/apt/sources.list.d/arm64-sources.list
           sudo apt-get update
           sudo apt-get install pkg-config libssl-dev libssl-dev:arm64 pkg-config:arm64
       - name: Install Rust
