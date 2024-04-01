@@ -35,6 +35,10 @@ jobs:
             target: 'x86_64-apple-darwin'
           - os: 'macos-latest'
             target: 'aarch64-apple-darwin'
+          - os: 'windows-2022'
+            target: x86_64-pc-windows-msvc
+          - os: 'windows-2022'
+            target: aarch64-pc-windows-msvc
     runs-on: ${{ matrix.platform.os }}
     steps:
       - name: Checkout Repository
@@ -67,11 +71,18 @@ jobs:
         env:
           AARCH64_UNKNOWN_LINUX_GNU_OPENSSL_LIB_DIR: /usr/lib/aarch64-linux-gnu/
           AARCH64_UNKNOWN_LINUX_GNU_OPENSSL_INCLUDE_DIR: /usr/include/aarch64-linux-gnu/openssl/
+      - name: 'Tar Binary'
+        run: |
+          mv ./target/${{ matrix.platform.target }}/release/${{ env.BINARY_NAME }} ${{ env.BINARY_NAME }}
+          tar -czvf ${{ needs.configure.outputs.package_name }}-${{ matrix.platform.target }}.tar.gz ${{ env.BINARY_NAME }}
+        env:
+          BINARY_NAME: ${{ format('{0}{1}', needs.configure.outputs.package_name, matrix.platform.os == 'windows-2022' && '.exe' || '' ) }}
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.configure.outputs.package_name }}-${{ matrix.platform.target }}
-          path: ./target/${{ matrix.platform.target }}/release/${{ needs.configure.outputs.package_name }}
+          path: ${{ needs.configure.outputs.package_name }}-${{ matrix.platform.target }}.tar.gz
+          if-no-files-found: 'error'
   publish-release:
     permissions:
       contents: write
@@ -80,13 +91,12 @@ jobs:
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v4
-      - name: Display Structure of Downloaded Files
-        run: ls -R
+        with:
+          merge-multiple: true
       - name: Publish Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            ytdl-mp3-aarch64-apple-darwin
-            ytdl-mp3-aarch64-unknown-linux-gnu
-            ytdl-mp3-x86_64-apple-darwin
-            ytdl-mp3-x86_64-unknown-linux-gnu
+          body: Please download the appropriate binary for your system and move it somewhere in your path.
+          prerelease: ${{ contains(needs.configure.outputs.package_version, 'alpha') || contains(needs.configure.outputs.package_version, 'beta')  }}
+          files: ${{ needs.configure.outputs.package_name }}-*.tar.gz
+          tag_name: ${{ needs.configure.outputs.package_name }}-v${{ needs.configure.outputs.package_version }}
