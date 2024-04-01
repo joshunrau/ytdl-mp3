@@ -1,2 +1,2 @@
 [target.'cfg(target_env = "musl")']
-rustflags = ["-C", "target-feature=+crt-static", "-C", "link-self-contained=yes"]
+rustflags = ["-C", "target-feature=+crt-static", "-C", "link-self-contained=yes", "-C", ]
