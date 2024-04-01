@@ -68,19 +68,19 @@ jobs:
         if: matrix.platform.os == 'ubuntu-22.04'
         run: |
           grep ^deb /etc/apt/sources.list | sed 's/deb /deb [arch=amd64] /' | tee /tmp/sources.list
-          mv /tmp/sources.list /etc/apt/sources.list
-          dpkg --add-architecture arm64
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
-          echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  >> /etc/apt/sources.list.d/arm64-sources.list
-          apt-get update
-          apt-get install pkg-config libssl-dev libssl-dev:arm64 pkg-config:arm64
+          sudo mv /tmp/sources.list /etc/apt/sources.list
+          sudo dpkg --add-architecture arm64
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-updates multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted universe multiverse  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo echo deb [arch=arm64]  http://ports.ubuntu.com/ubuntu-ports/ jammy-security universe  >> /etc/apt/sources.list.d/arm64-sources.list
+          sudo apt-get update
+          sudo apt-get install pkg-config libssl-dev libssl-dev:arm64 pkg-config:arm64
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
