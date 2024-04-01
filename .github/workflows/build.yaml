@@ -19,27 +19,8 @@ jobs:
         run: |
           echo "PACKAGE_NAME=$(cat package.json | jq -r .name)" | sudo tee -a "$GITHUB_OUTPUT"
           echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" | sudo tee -a "$GITHUB_OUTPUT"
-  create-release:
-    runs-on: ubuntu-22.04
-    needs: [configure]
-    permissions:
-      contents: write
-    outputs:
-      release_id: ${{ steps.create-release.outputs.result }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Create Release
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { createRelease } = require('./.github/scripts/release.cjs');
-            return await createRelease({ context, github }, {
-              packageName: '${{ needs.configure.outputs.package_name }}',
-              packageVersion: '${{ needs.configure.outputs.package_version }}'
-            });
   build:
-    needs: [configure, create-release]
+    needs: [configure]
     permissions:
       contents: write
     strategy:
@@ -95,22 +76,17 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-22.04
-    needs: [configure, create-release, build]
+    needs: [configure, build]
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v4
       - name: Display Structure of Downloaded Files
         run: ls -R
-      # - name: Publish Release
-      #   id: publish-release
-      #   uses: actions/github-script@v7
-      #   env:
-      #     release_id: ${{ needs.create-release.outputs.release_id }}
-      #   with:
-      #     script: |
-      #       github.rest.repos.updateRelease({
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         release_id: process.env.release_id,
-      #         draft: false,
-      #       })
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ytdl-mp3-aarch64-apple-darwin
+            ytdl-mp3-aarch64-unknown-linux-gnu
+            ytdl-mp3-x86_64-apple-darwin
+            ytdl-mp3-x86_64-unknown-linux-gnu
