@@ -20,12 +20,12 @@ pub struct DownloadOptions {
     pub log_level: Option<LogLevel>,
 }
 
-pub async fn download_song(url: &str, options: DownloadOptions) -> &str {
+pub async fn download_song(url: &str, options: DownloadOptions) -> Result<String, String> {
     let output_dir: PathBuf = match &options.output_dir {
         Some(value) => {
             let buf = PathBuf::from(value);
             if !buf.is_dir() {
-                panic!("Not a directory: {}", buf.display())
+                return Err(format!("Not a directory: {}", buf.display()));
             }
             buf
         }
@@ -72,7 +72,7 @@ pub async fn download_song(url: &str, options: DownloadOptions) -> &str {
         println!("Success!");
     }
 
-    "success"
+    Ok(String::from("success"))
 }
 
 #[cfg(test)]
@@ -91,6 +91,6 @@ mod tests {
             },
         )
         .await;
-        assert!(!result.is_empty());
+        assert!(!result.unwrap().is_empty());
     }
 }

@@ -28,5 +28,8 @@ async fn main() {
         },
     )
     .await;
-    println!("Success! Output file: {result}");
+    match result {
+        Ok(output_file) => println!("Success! Output file: {output_file}"),
+        Err(error_message) => eprintln!("ERROR: {error_message}")
+    }
 }
