@@ -9,6 +9,9 @@ crate-type = ["cdylib"]
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive", "wrap_help"] }
+directories = "5"
 neon = "1"
+regex = "1.10"
 rustube = "0.6.0"
+symphonia = { version = "0.5", features = ["all"] }
 tokio = { version = "1.4.0", features = ["full"] }

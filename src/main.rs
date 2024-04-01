@@ -1,25 +1,18 @@
-use clap::{Parser, ValueEnum};
+mod core;
+mod utils;
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
-enum LogLevel {
-    /// disable all output to stdout
-    Silent,
-    /// log to stdout on success
-    Normal,
-    /// print debugging information to stdout
-    Verbose,
-}
+use clap::Parser;
+use core::{download_song, DownloadOptions, LogLevel};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None )]
 struct Cli {
     /// url of video to download
     url: String,
-
     /// path to output directory
     #[arg(short = 'o', long)]
     output_dir: Option<String>,
-
+    /// the level of logging to enable
     #[arg(short = 'l', long)]
     log_level: Option<LogLevel>,
 }
@@ -27,10 +20,13 @@ struct Cli {
 #[tokio::main]
 async fn main() {
     let args = Cli::parse();
-    println!("{:#?}", args);
-    let url = "https://www.youtube.com/watch?v=9MXUHYGvBVY";
-    println!(
-        "downloaded video to {:?}",
-        rustube::download_best_quality(&url).await.unwrap()
-    );
+    let result = download_song(
+        args.url.as_str(),
+        DownloadOptions {
+            output_dir: args.output_dir,
+            log_level: args.log_level,
+        },
+    )
+    .await;
+    println!("Success! Output file: {result}");
 }
