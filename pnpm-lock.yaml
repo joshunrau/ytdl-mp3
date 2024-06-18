@@ -29,6 +29,9 @@ importers:
       '@joshunrau/prettier-config':
         specifier: ^0.3.0
         version: 0.3.0(husky@9.0.11)(prettier@3.3.2)
+      '@joshunrau/tsconfig':
+        specifier: ^0.0.3
+        version: 0.0.3(typescript@5.4.5)
       '@types/ffmpeg-static':
         specifier: ^3.0.3
         version: 3.0.3
@@ -301,6 +304,12 @@ packages:
         optional: true
       prettier-plugin-tailwindcss:
         optional: true
+
+  '@joshunrau/tsconfig@0.0.3':
+    resolution:
+      { integrity: sha512-cBZ629LoQJGXUntdVjQwFdYwMHUsqlY2tkyXiwxaJsYXobs0hmSTGy+VRlbJjTIxzi2rPdFeLUyni4KThjqqIQ== }
+    peerDependencies:
+      typescript: ^5.4.3
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution:
@@ -2421,6 +2430,10 @@ snapshots:
       prettier: 3.3.2
     optionalDependencies:
       husky: 9.0.11
+
+  '@joshunrau/tsconfig@0.0.3(typescript@5.4.5)':
+    dependencies:
+      typescript: 5.4.5
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:

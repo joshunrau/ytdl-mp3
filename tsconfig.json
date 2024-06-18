@@ -1,16 +1,4 @@
 {
-  "compilerOptions": {
-    "declaration": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "outDir": "dist",
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext"
-  },
-  "include": ["src/**/*.ts"]
+  "extends": ["@joshunrau/tsconfig"],
+  "include": ["src/**/*"]
 }
