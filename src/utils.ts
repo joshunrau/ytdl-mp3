@@ -17,8 +17,14 @@ export function removeParenthesizedText(s: string): string {
   return s;
 }
 
-export function isDirectory(dirPath: string): boolean {
-  return fs.existsSync(dirPath) && fs.lstatSync(dirPath).isDirectory();
+/**
+ * Checks if the given path corresponds to a directory.
+ *
+ * @param path - the path to check.
+ * @returns `true` if the path exists and is a directory, `false` otherwise.
+ */
+export function isDirectory(path: string): boolean {
+  return fs.existsSync(path) && fs.lstatSync(path).isDirectory();
 }
 
 export async function userInput(prompt: string, defaultInput?: string): Promise<string> {
@@ -26,7 +32,6 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
     input: process.stdin,
     output: process.stdout
   });
-
   return new Promise((resolve, reject) => {
     rl.question(prompt, (response) => {
       rl.close();
