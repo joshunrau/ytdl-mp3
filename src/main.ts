@@ -1,7 +1,6 @@
 import { Command } from 'commander';
 
 import { description, name, version } from '../package.json';
-
 import { Downloader } from './Downloader';
 import { YtdlMp3Error } from './utils';
 
