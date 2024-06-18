@@ -27,6 +27,13 @@ export function isDirectory(path: string): boolean {
   return fs.existsSync(path) && fs.lstatSync(path).isDirectory();
 }
 
+/**
+ * Prompts the user for input via stdin and returns a promise that resolves to the user's input.
+ *
+ * @param prompt - the prompt text displayed to the user.
+ * @param defaultInput - optional default input pre-filled in the prompt.
+ * @returns a promise that resolves to the user's input
+ */
 export async function userInput(prompt: string, defaultInput?: string): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -45,6 +52,9 @@ export async function userInput(prompt: string, defaultInput?: string): Promise<
   });
 }
 
+/**
+ * Custom error class representing unrecoverable errors intentionally thrown by ytdl-mp3
+ */
 export class YtdlMp3Error extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
