@@ -1,14 +1,13 @@
-import path from 'path';
-import url from 'url';
+import { config } from '@joshunrau/eslint-config';
 
-import { createConfig } from '@joshunrau/eslint-config';
-
-const __filename = url.fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-/** @type {import('eslint').Linter.FlatConfig[]} */
-export default createConfig({
-  typescript: {
-    project: path.resolve(__dirname, 'tsconfig.json'),
+export default config({
+  env: {
+    browser: false,
+    es2021: true,
+    node: true
   },
+  exclude: ['dist/*'],
+  typescript: {
+    enabled: true
+  }
 });
