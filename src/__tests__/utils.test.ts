@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { removeParenthesizedText } from '../utils';
+import { isDirectory, removeParenthesizedText } from '../utils';
 
 describe('removeParenthesizedText', () => {
   it('removes content within square brackets', () => {
@@ -27,5 +27,17 @@ describe('removeParenthesizedText', () => {
   });
   it('handles an empty string', () => {
     expect(removeParenthesizedText('')).toBe('');
+  });
+});
+
+describe('isDirectory', () => {
+  it('should return true for an existing directory', () => {
+    expect(isDirectory(import.meta.dirname)).toBe(true);
+  });
+  it('should return true for an existing file', () => {
+    expect(isDirectory(import.meta.filename)).toBe(false);
+  });
+  it('should return true for a non-existent file', () => {
+    expect(isDirectory('/dev/null/foo.js')).toBe(false);
   });
 });
