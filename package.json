@@ -41,7 +41,7 @@
     "package.json"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsup",
+    "build": "tsup",
     "format": "prettier --write src",
     "lint": "tsc && eslint --fix src",
     "prepare": "husky"
