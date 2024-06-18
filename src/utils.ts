@@ -1,8 +1,20 @@
 import fs from 'fs';
 import readline from 'readline';
 
+/**
+ * Removes content within square brackets or parentheses, including the brackets and
+ * parentheses themselves, along with any surrounding whitespace, from the given string.
+ *
+ * @param input the input string from which to remove content within brackets and parentheses.
+ * @returns a new string with content within brackets and parentheses removed.
+ */
 export function removeParenthesizedText(s: string): string {
-  return s.replace(/\s*[([].*?[)\]]\s*/g, '');
+  // This loop is to handle nested nested brackets (see test for examples)
+  const regex = /\s*([[(][^[\]()]*[\])])\s*/g;
+  while (regex.test(s)) {
+    s = s.replace(regex, '');
+  }
+  return s;
 }
 
 export function isDirectory(dirPath: string): boolean {
