@@ -20,10 +20,10 @@ export async function main() {
   const options = program.opts();
   try {
     const downloader = new Downloader(options);
-    await downloader.downloadSong(program.args[0]);
+    await downloader.downloadSong(program.args[0]!);
   } catch (err) {
     if (err instanceof YtdlMp3Error) {
-      if (options.verbose) {
+      if (options['verbose']) {
         console.error(err.cause);
         console.error(err.stack);
       }

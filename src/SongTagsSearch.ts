@@ -44,7 +44,7 @@ export class SongTagsSearch {
   async search(verify = false): Promise<SongTags> {
     console.log(`Attempting to query iTunes API with the following search term: ${this.searchTerm}`);
     const searchResults = await this.fetchResults();
-    const result = verify ? await this.getVerifiedResult(searchResults) : searchResults[0];
+    const result = verify ? await this.getVerifiedResult(searchResults) : searchResults[0]!;
     const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
     const albumArt = await this.fetchAlbumArt(artworkUrl);
     return {
