@@ -1,6 +1,24 @@
-# ytdl-mp3
+<!-- PROJECT LOGO -->
+<div align="center">
+  <h3 align="center">ytdl-mp3</h3>
+  <p align="center">
+    An NPM package to facilitate downloading music from YouTube, including automatic retrieval of ID3 tags and album art via the iTunes public API.
+    <br />
+    <a href="https://github.com/joshunrau/ytdl-mp3/issues" rel="noreferrer" target="_blank">Report Bug</a>
+    ·
+    <a href="https://github.com/joshunrau/ytdl-mp3/issues" rel="noreferrer" target="_blank">Request Feature</a>
+  </p>
+</div>
 
-An NPM package to facilitate downloading music from YouTube, including automatic retrieval of ID3 tags and album art via the iTunes public API.
+<!-- PROJECT SHIELDS -->
+<div align="center">
+
+![license](https://img.shields.io/github/license/joshunrau/ytdl-mp3)
+![version](https://img.shields.io/github/package-json/v/joshunrau/ytdl-mp3)
+[![codecov](https://codecov.io/gh/joshunrau/ytdl-mp3/graph/badge.svg?token=T35BBZ7Q42)](https://codecov.io/gh/joshunrau/ytdl-mp3)
+
+</div>
+<hr />
 
 ## Installation
 
@@ -36,7 +54,7 @@ Options:
 import { Downloader } from 'ytdl-mp3';
 
 const downloader = new Downloader({
-  getTags: true,
+  getTags: true
 });
 
 await downloader.downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k');
@@ -49,7 +67,7 @@ const { Downloader } = require('ytdl-mp3');
 
 async function main() {
   const downloader = new Downloader({
-    getTags: true,
+    getTags: true
   });
   await downloader.downloadSong('https://www.youtube.com/watch?v=7jgnv0xCv-k');
 }
