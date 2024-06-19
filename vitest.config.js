@@ -9,7 +9,13 @@ export default defineConfig({
       include: ['src/**/*'],
       provider: 'v8',
       reportsDirectory: path.resolve(import.meta.dirname, 'coverage'),
-      skipFull: true
+      skipFull: true,
+      thresholds: {
+        branches: 70,
+        functions: 70,
+        lines: 70,
+        statements: 70
+      }
     },
     watch: false
   }
