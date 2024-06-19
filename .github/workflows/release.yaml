@@ -1,0 +1,19 @@
+name: Release
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    uses: joshunrau/semantic-release/.github/workflows/release.yaml@main
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    with:
+      build-command: pnpm build # optional
