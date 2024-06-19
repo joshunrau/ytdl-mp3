@@ -1,5 +1,21 @@
 # Changelog
 
+## [4.0.0](https://github.com/joshunrau/ytdl-mp3/compare/v3.4.1...v4.0.0) (2024-06-19)
+
+
+### ⚠ BREAKING CHANGES
+
+* set minimum node version to 20
+
+### Bug Fixes
+
+* handle nested brackets in removeParenthesizedText ([6d3871b](https://github.com/joshunrau/ytdl-mp3/commit/6d3871bf278e1f3dc6bcf1e60fea92ae9d18108b))
+
+
+### Miscellaneous Chores
+
+* set minimum node version to 20 ([9e0996a](https://github.com/joshunrau/ytdl-mp3/commit/9e0996a41a5cb6c6bad953b5eb142bab9af446e6))
+
 ## [3.4.1] - 2023-09-14
 
 ### Changed
