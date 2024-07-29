@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.0...v4.0.1) (2024-07-29)
+
+
+### Bug Fixes
+
+* issue where cli side effect prevents import as cjs module ([85d9952](https://github.com/joshunrau/ytdl-mp3/commit/85d99525761a082cc7ba4487688d33cdacd8f853))
+
 ## [4.0.0](https://github.com/joshunrau/ytdl-mp3/compare/v3.4.1...v4.0.0) (2024-06-19)
 
 
