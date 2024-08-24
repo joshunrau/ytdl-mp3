@@ -12,6 +12,7 @@ import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 export type DownloaderOptions = {
   getTags?: boolean;
   outputDir?: string;
+  silentMode?: boolean;
   verifyTags?: boolean;
 };
 
@@ -20,11 +21,13 @@ export class Downloader {
 
   getTags: boolean;
   outputDir: string;
+  silentMode: boolean;
   verifyTags: boolean;
 
-  constructor({ getTags, outputDir, verifyTags }: DownloaderOptions) {
+  constructor({ getTags, outputDir, silentMode, verifyTags }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
+    this.silentMode = Boolean(silentMode);
     this.verifyTags = Boolean(verifyTags);
   }
 
@@ -54,7 +57,7 @@ export class Downloader {
       NodeID3.write(songTags, outputFile);
     }
 
-    console.log(`Done! Output file: ${outputFile}`);
+    if (!this.silentMode) console.log(`Done! Output file: ${outputFile}`);
     return outputFile;
   }
 
