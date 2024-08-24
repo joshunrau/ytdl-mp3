@@ -42,7 +42,14 @@ export class Downloader {
     const songTagsSearch = new SongTagsSearch(videoInfo.videoDetails);
 
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
-    const videoData = await this.downloadVideo(videoInfo);
+    const videoData = await this.downloadVideo(videoInfo).catch((error) => {
+      throw new YtdlMp3Error('Failed to download video', {
+        cause: error
+      });
+    });
+
+    // empty file
+    if (videoData.length === 0) throw new YtdlMp3Error('Failed to download video');
 
     formatConverter.videoToAudio(videoData, outputFile);
     if (this.getTags) {
