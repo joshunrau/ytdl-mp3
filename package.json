@@ -52,11 +52,11 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.14.4",
     "axios": "^1.7.2",
     "commander": "^12.1.0",
     "ffmpeg-static": "^5.2.0",
-    "node-id3": "^0.2.6",
-    "ytdl-core": "4.11.5"
+    "node-id3": "^0.2.6"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",

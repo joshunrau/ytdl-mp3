@@ -1,5 +1,5 @@
+import type { MoreVideoDetails } from '@distube/ytdl-core';
 import axios, { type AxiosError } from 'axios';
-import type { MoreVideoDetails } from 'ytdl-core';
 
 import { YtdlMp3Error, removeParenthesizedText, userInput } from './utils';
 

@@ -1,9 +1,9 @@
 import os from 'os';
 import path from 'path';
 
+import ytdl from '@distube/ytdl-core';
+import type { videoInfo as VideoInfo } from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
-import ytdl from 'ytdl-core';
-import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import { FormatConverter } from './FormatConverter';
 import { SongTagsSearch } from './SongTagsSearch';
@@ -47,9 +47,6 @@ export class Downloader {
         cause: error
       });
     });
-
-    // empty file
-    if (videoData.length === 0) throw new YtdlMp3Error('Failed to download video');
 
     formatConverter.videoToAudio(videoData, outputFile);
     if (this.getTags) {

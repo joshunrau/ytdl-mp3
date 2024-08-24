@@ -2,10 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { PassThrough } from 'stream';
 
+import ytdl from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Mock } from 'vitest';
-import ytdl from 'ytdl-core';
 
 import { Downloader } from '../Downloader';
 import { FormatConverter } from '../FormatConverter';
