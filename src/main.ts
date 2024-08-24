@@ -14,6 +14,7 @@ export async function main() {
   program.option('-o --output-dir <path>', 'path to output directory', Downloader.defaultDownloadsDir);
   program.option('-n --no-get-tags', 'skip extracting/applying id3 tags');
   program.option('-v --verify-tags', 'verify id3 tags fetched from itunes');
+  program.option('-s --silent-mode', 'skip console output');
   program.option('--verbose', 'enable verbose mode');
   program.parse();
 

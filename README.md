@@ -45,6 +45,7 @@ Options:
 -o --output-dir <path>  path to output directory
 -n --no-get-tags        skip extracting/applying id3 tags
 -v --verify-tags        verify id3 tags fetched from itunes
+-s --silent-mode        skip console output
 -h, --help              display help for command
 ```
 
