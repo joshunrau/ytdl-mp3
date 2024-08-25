@@ -24,7 +24,7 @@ export async function main() {
     await downloader.downloadSong(program.args[0]!);
   } catch (err) {
     if (err instanceof YtdlMp3Error) {
-      if (options['verbose']) {
+      if (options.verbose) {
         console.error(err.cause);
         console.error(err.stack);
       }
