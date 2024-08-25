@@ -1,7 +1,7 @@
 {
   "name": "ytdl-mp3",
   "type": "module",
-  "version": "4.0.2",
+  "version": "5.0.0",
   "packageManager": "pnpm@9.3.0",
   "description": "An NPM package to facilitate downloading music from YouTube, including automatic retrieval of ID3 tags and album art via the iTunes public API.",
   "author": "Joshua Unrau",

@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.2...v5.0.0) (2024-08-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* the main export has been removed since the version was incorrect
+
+### Code Refactoring
+
+* move main into bin ([fa6144c](https://github.com/joshunrau/ytdl-mp3/commit/fa6144c625f6e8d28f4e493fc55708000e5fb79c))
+
 ## [4.0.2](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.1...v4.0.2) (2024-08-25)
 
 
