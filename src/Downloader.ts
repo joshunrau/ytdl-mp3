@@ -1,9 +1,9 @@
 import os from 'os';
 import path from 'path';
 
+import ytdl from '@distube/ytdl-core';
+import type { videoInfo as VideoInfo } from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
-import ytdl from 'ytdl-core';
-import type { videoInfo as VideoInfo } from 'ytdl-core';
 
 import { FormatConverter } from './FormatConverter';
 import { SongTagsSearch } from './SongTagsSearch';
@@ -12,6 +12,7 @@ import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 export type DownloaderOptions = {
   getTags?: boolean;
   outputDir?: string;
+  silentMode?: boolean;
   verifyTags?: boolean;
 };
 
@@ -20,11 +21,13 @@ export class Downloader {
 
   getTags: boolean;
   outputDir: string;
+  silentMode: boolean;
   verifyTags: boolean;
 
-  constructor({ getTags, outputDir, verifyTags }: DownloaderOptions) {
+  constructor({ getTags, outputDir, silentMode, verifyTags }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
+    this.silentMode = Boolean(silentMode);
     this.verifyTags = Boolean(verifyTags);
   }
 
@@ -42,7 +45,11 @@ export class Downloader {
     const songTagsSearch = new SongTagsSearch(videoInfo.videoDetails);
 
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
-    const videoData = await this.downloadVideo(videoInfo);
+    const videoData = await this.downloadVideo(videoInfo).catch((error) => {
+      throw new YtdlMp3Error('Failed to download video', {
+        cause: error
+      });
+    });
 
     formatConverter.videoToAudio(videoData, outputFile);
     if (this.getTags) {
@@ -50,7 +57,7 @@ export class Downloader {
       NodeID3.write(songTags, outputFile);
     }
 
-    console.log(`Done! Output file: ${outputFile}`);
+    if (!this.silentMode) console.log(`Done! Output file: ${outputFile}`);
     return outputFile;
   }
 
