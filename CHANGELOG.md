@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.2](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.1...v4.0.2) (2024-08-25)
+
+
+### Bug Fixes
+
+* issue where 403 error occurs ([a515cfe](https://github.com/joshunrau/ytdl-mp3/commit/a515cfe3af7f75271fdd5347f5481c9be367ae03))
+
 ## [4.0.1](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.0...v4.0.1) (2024-07-29)
 
 
