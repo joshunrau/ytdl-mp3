@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/joshunrau/ytdl-mp3/compare/v5.0.0...v5.1.0) (2024-12-16)
+
+
+### Features
+
+* included genre and album ([b19a51c](https://github.com/joshunrau/ytdl-mp3/commit/b19a51c838893b83395eaf6529157be1df28ee7f))
+
 ## [5.0.0](https://github.com/joshunrau/ytdl-mp3/compare/v4.0.2...v5.0.0) (2024-08-25)
 
 
