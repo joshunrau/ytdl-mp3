@@ -9,6 +9,8 @@ export type SearchResult = {
   trackName: string;
   collectionName: string;
   primaryGenreName: string;
+  trackNumber: number;
+  releaseDate: string
 };
 
 export type SearchData = {
@@ -20,26 +22,25 @@ export type AlbumArt = {
   description: string;
   imageBuffer: Buffer;
   mime: string;
-  type: {
-    id: number;
-    name: string;
-  };
+  type: number
 };
 
 export type SongTags = {
   artist: string;
-  image: AlbumArt;
+  APIC: AlbumArt;
   title: string;
   album: string;
-  genre: string
+  genre: string,
+  TRCK: number,
+  year: string,
 };
 
 export class SongTagsSearch {
   private searchTerm: string;
   private url: URL;
 
-  constructor(videoDetails: MoreVideoDetails) {
-    this.searchTerm = removeParenthesizedText(videoDetails.title);
+  constructor(searchTerm: string) {
+    this.searchTerm = removeParenthesizedText(searchTerm);
     this.url = new URL('https://itunes.apple.com/search?');
     this.url.searchParams.set('media', 'music');
     this.url.searchParams.set('term', this.searchTerm);
@@ -53,18 +54,17 @@ export class SongTagsSearch {
     const albumArt = await this.fetchAlbumArt(artworkUrl);
     return {
       artist: result.artistName,
-      image: {
+      APIC: {
         description: 'Album Art',
         imageBuffer: albumArt,
-        mime: 'image/png',
-        type: {
-          id: 3,
-          name: 'front cover'
-        }
+        mime: 'image/jpeg',
+        type: 3
       },
       title: result.trackName,
       album: result.collectionName,
-      genre: result.primaryGenreName
+      genre: result.primaryGenreName,
+      TRCK: result.trackNumber,
+      year: result.releaseDate.substring(0, 4)
     };
   }
 
