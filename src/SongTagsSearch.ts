@@ -7,6 +7,8 @@ export type SearchResult = {
   artistName: string;
   artworkUrl100: string;
   trackName: string;
+  collectionName: string;
+  primaryGenreName: string;
 };
 
 export type SearchData = {
@@ -28,6 +30,8 @@ export type SongTags = {
   artist: string;
   image: AlbumArt;
   title: string;
+  album: string;
+  genre: string
 };
 
 export class SongTagsSearch {
@@ -58,7 +62,9 @@ export class SongTagsSearch {
           name: 'front cover'
         }
       },
-      title: result.trackName
+      title: result.trackName,
+      album: result.collectionName,
+      genre: result.primaryGenreName
     };
   }
 
@@ -91,6 +97,8 @@ export class SongTagsSearch {
       console.log('The following tags were extracted from iTunes:');
       console.log('Title: ' + result.trackName);
       console.log('Artist: ' + result.artistName);
+      console.log('Album: ' + result.collectionName);
+      console.log('Genre: ' + result.primaryGenreName);
 
       const validResponses = ['Y', 'YES', 'N', 'NO'];
       let userSelection = (await userInput('Please verify (Y/N): ')).toUpperCase();
