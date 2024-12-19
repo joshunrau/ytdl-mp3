@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.2.0](https://github.com/joshunrau/ytdl-mp3/compare/v5.1.0...v5.2.0) (2024-12-19)
+
+
+### Features
+
+* included year and track number, added support for custom itunes search strings ([6fc57d0](https://github.com/joshunrau/ytdl-mp3/commit/6fc57d02cdff6af67920a6750eb8fa24d55aa66b))
+
+
+### Bug Fixes
+
+* removed unused import ([e45dd80](https://github.com/joshunrau/ytdl-mp3/commit/e45dd80857a556508e019fdcc6ed97d08aa94599))
+
 ## [5.1.0](https://github.com/joshunrau/ytdl-mp3/compare/v5.0.0...v5.1.0) (2024-12-16)
 
 
