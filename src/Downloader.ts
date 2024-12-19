@@ -6,7 +6,7 @@ import type { videoInfo as VideoInfo } from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
 
 import { FormatConverter } from './FormatConverter';
-import { SongTagsSearch } from './SongTagsSearch';
+import { SongTagsSearch, type SongTags } from './SongTagsSearch';
 import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 
 export type DownloaderOptions = {
@@ -14,7 +14,17 @@ export type DownloaderOptions = {
   outputDir?: string;
   silentMode?: boolean;
   verifyTags?: boolean;
+  customSearchTerm?: string | null;
 };
+
+type DownlaoderItemInformation = {
+  outputFile : string,
+  album: string | null,
+  artist: string | null,
+  genre: string | null,
+  trackNo: number | null,
+  year: string | null
+}
 
 export class Downloader {
   static defaultDownloadsDir = path.join(os.homedir(), 'Downloads');
@@ -23,15 +33,17 @@ export class Downloader {
   outputDir: string;
   silentMode: boolean;
   verifyTags: boolean;
+  customSearchTerm: string | null;
 
-  constructor({ getTags, outputDir, silentMode, verifyTags }: DownloaderOptions) {
+  constructor({ getTags, outputDir, silentMode, verifyTags, customSearchTerm }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
     this.silentMode = Boolean(silentMode);
     this.verifyTags = Boolean(verifyTags);
+    this.customSearchTerm = customSearchTerm ?? null;
   }
 
-  async downloadSong(url: string): Promise<string> {
+  async downloadSong(url: string): Promise<DownlaoderItemInformation> {
     if (!isDirectory(this.outputDir)) {
       throw new YtdlMp3Error(`Not a directory: ${this.outputDir}`);
     }
@@ -42,7 +54,8 @@ export class Downloader {
     });
 
     const formatConverter = new FormatConverter();
-    const songTagsSearch = new SongTagsSearch(videoInfo.videoDetails);
+    const songTagsSearch = new SongTagsSearch(this.customSearchTerm ? this.customSearchTerm.replaceAll("{title}", videoInfo.videoDetails.title).replaceAll("{uploader}", videoInfo.videoDetails.author.name) : videoInfo.videoDetails.title);
+    console.log(videoInfo.videoDetails);
 
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
     const videoData = await this.downloadVideo(videoInfo).catch((error) => {
@@ -52,13 +65,21 @@ export class Downloader {
     });
 
     formatConverter.videoToAudio(videoData, outputFile);
+    let songTags: SongTags | null = null;
     if (this.getTags) {
-      const songTags = await songTagsSearch.search(this.verifyTags);
+      songTags = await songTagsSearch.search(this.verifyTags);
       NodeID3.write(songTags, outputFile);
     }
 
     if (!this.silentMode) console.log(`Done! Output file: ${outputFile}`);
-    return outputFile;
+    return {
+      outputFile,
+      album: songTags?.album ?? null,
+      artist: songTags?.artist ?? null,
+      genre: songTags?.genre ?? null,
+      trackNo: songTags?.TRCK ?? null,
+      year: songTags?.year ?? null,
+    };
   }
 
   /** Returns the content from the video as a buffer */
