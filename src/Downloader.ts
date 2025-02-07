@@ -6,36 +6,36 @@ import type { videoInfo as VideoInfo } from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
 
 import { FormatConverter } from './FormatConverter';
-import { SongTagsSearch, type SongTags } from './SongTagsSearch';
+import { type SongTags, SongTagsSearch } from './SongTagsSearch';
 import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
 
 export type DownloaderOptions = {
+  customSearchTerm?: null | string;
   getTags?: boolean;
   outputDir?: string;
   silentMode?: boolean;
   verifyTags?: boolean;
-  customSearchTerm?: string | null;
 };
 
 type DownlaoderItemInformation = {
-  outputFile : string,
-  album: string | null,
-  artist: string | null,
-  genre: string | null,
-  trackNo: number | null,
-  year: string | null
-}
+  album: null | string;
+  artist: null | string;
+  genre: null | string;
+  outputFile: string;
+  trackNo: null | number;
+  year: null | string;
+};
 
 export class Downloader {
   static defaultDownloadsDir = path.join(os.homedir(), 'Downloads');
 
+  customSearchTerm: null | string;
   getTags: boolean;
   outputDir: string;
   silentMode: boolean;
   verifyTags: boolean;
-  customSearchTerm: string | null;
 
-  constructor({ getTags, outputDir, silentMode, verifyTags, customSearchTerm }: DownloaderOptions) {
+  constructor({ customSearchTerm, getTags, outputDir, silentMode, verifyTags }: DownloaderOptions) {
     this.outputDir = outputDir ?? Downloader.defaultDownloadsDir;
     this.getTags = Boolean(getTags);
     this.silentMode = Boolean(silentMode);
@@ -54,7 +54,13 @@ export class Downloader {
     });
 
     const formatConverter = new FormatConverter();
-    const songTagsSearch = new SongTagsSearch(this.customSearchTerm ? this.customSearchTerm.replaceAll("{title}", videoInfo.videoDetails.title).replaceAll("{uploader}", videoInfo.videoDetails.author.name) : videoInfo.videoDetails.title);
+    const songTagsSearch = new SongTagsSearch(
+      this.customSearchTerm
+        ? this.customSearchTerm
+            .replaceAll('{title}', videoInfo.videoDetails.title)
+            .replaceAll('{uploader}', videoInfo.videoDetails.author.name)
+        : videoInfo.videoDetails.title
+    );
     console.log(videoInfo.videoDetails);
 
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
@@ -73,12 +79,12 @@ export class Downloader {
 
     if (!this.silentMode) console.log(`Done! Output file: ${outputFile}`);
     return {
-      outputFile,
       album: songTags?.album ?? null,
       artist: songTags?.artist ?? null,
       genre: songTags?.genre ?? null,
+      outputFile,
       trackNo: songTags?.TRCK ?? null,
-      year: songTags?.year ?? null,
+      year: songTags?.year ?? null
     };
   }
 

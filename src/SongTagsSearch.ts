@@ -5,11 +5,11 @@ import { YtdlMp3Error, removeParenthesizedText, userInput } from './utils';
 export type SearchResult = {
   artistName: string;
   artworkUrl100: string;
-  trackName: string;
   collectionName: string;
   primaryGenreName: string;
+  releaseDate: string;
+  trackName: string;
   trackNumber: number;
-  releaseDate: string
 };
 
 export type SearchData = {
@@ -21,17 +21,17 @@ export type AlbumArt = {
   description: string;
   imageBuffer: Buffer;
   mime: string;
-  type: number
+  type: number;
 };
 
 export type SongTags = {
-  artist: string;
   APIC: AlbumArt;
-  title: string;
+  TRCK: number;
   album: string;
-  genre: string,
-  TRCK: number,
-  year: string,
+  artist: string;
+  genre: string;
+  title: string;
+  year: string;
 };
 
 export class SongTagsSearch {
@@ -52,17 +52,17 @@ export class SongTagsSearch {
     const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
     const albumArt = await this.fetchAlbumArt(artworkUrl);
     return {
-      artist: result.artistName,
       APIC: {
         description: 'Album Art',
         imageBuffer: albumArt,
         mime: 'image/jpeg',
         type: 3
       },
-      title: result.trackName,
-      album: result.collectionName,
-      genre: result.primaryGenreName,
       TRCK: result.trackNumber,
+      album: result.collectionName,
+      artist: result.artistName,
+      genre: result.primaryGenreName,
+      title: result.trackName,
       year: result.releaseDate.substring(0, 4)
     };
   }
