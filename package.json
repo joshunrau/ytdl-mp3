@@ -57,7 +57,7 @@
     "axios": "^1.7.9",
     "commander": "^12.1.0",
     "ffmpeg-static": "^5.2.0",
-    "node-id3": "^0.2.7"
+    "node-id3": "0.2.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",

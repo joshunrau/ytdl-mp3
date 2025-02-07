@@ -20,8 +20,8 @@ importers:
         specifier: ^5.2.0
         version: 5.2.0
       node-id3:
-        specifier: ^0.2.7
-        version: 0.2.7
+        specifier: 0.2.5
+        version: 0.2.5
     devDependencies:
       '@commitlint/cli':
         specifier: ^19.4.0
@@ -2923,9 +2923,9 @@ packages:
       { integrity: sha512-E2WEOVsgs7O16zsURJ/eH8BqhF029wGpEOnv7Urwdo2wmQanOACwJQh0devF9D9RhoZru0+9JXIS0dBXIAz+lA== }
     engines: { node: '>=18' }
 
-  node-id3@0.2.7:
+  node-id3@0.2.5:
     resolution:
-      { integrity: sha512-pARxCtihFzRph8zTZq5emWGPOVn3VgbRsaYXKz0bJS66kKJKJBfut4V/2tdtkssGXN9ijKI4vP811F2733GMvg== }
+      { integrity: sha512-JxxZPKhquip9b2U4z3B/FhNzPwYTPIzOD0i0C9KTK2mqIWv3fdqLOnTSaLrybor0J4+QA8nXJRlw24Fp8lFeGw== }
 
   normalize-package-data@6.0.2:
     resolution:
@@ -6795,7 +6795,7 @@ snapshots:
       emojilib: 2.4.0
       skin-tone: 2.0.0
 
-  node-id3@0.2.7:
+  node-id3@0.2.5:
     dependencies:
       iconv-lite: 0.6.2
 
