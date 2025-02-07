@@ -61,7 +61,6 @@ export class Downloader {
             .replaceAll('{uploader}', videoInfo.videoDetails.author.name)
         : videoInfo.videoDetails.title
     );
-    console.log(videoInfo.videoDetails);
 
     const outputFile = this.getOutputFile(videoInfo.videoDetails.title);
     const videoData = await this.downloadVideo(videoInfo).catch((error) => {
@@ -77,7 +76,10 @@ export class Downloader {
       NodeID3.write(songTags, outputFile);
     }
 
-    if (!this.silentMode) console.log(`Done! Output file: ${outputFile}`);
+    if (!this.silentMode) {
+      console.log(`Done! Output file: ${outputFile}`);
+    }
+
     return {
       album: songTags?.album ?? null,
       artist: songTags?.artist ?? null,
