@@ -53,11 +53,11 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.14.4",
-    "axios": "^1.7.5",
+    "@distube/ytdl-core": "^4.16.0",
+    "axios": "^1.7.9",
     "commander": "^12.1.0",
     "ffmpeg-static": "^5.2.0",
-    "node-id3": "^0.2.6"
+    "node-id3": "^0.2.7"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.4.0",
@@ -86,5 +86,12 @@
     "extends": [
       "@joshunrau/semantic-release"
     ]
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "undici": "7.x"
+      }
+    }
   }
 }
