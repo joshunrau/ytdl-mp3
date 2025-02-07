@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.1](https://github.com/joshunrau/ytdl-mp3/compare/v5.2.0...v5.2.1) (2025-02-07)
+
+
+### Bug Fixes
+
+* useless logs ([65df057](https://github.com/joshunrau/ytdl-mp3/commit/65df057cbe14aa6661aad15f41ee018fd4f30309))
+
 ## [5.2.0](https://github.com/joshunrau/ytdl-mp3/compare/v5.1.0...v5.2.0) (2024-12-19)
 
 
