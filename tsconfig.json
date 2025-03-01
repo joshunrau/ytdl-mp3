@@ -1,6 +1,7 @@
 {
   "extends": ["@douglasneuroinformatics/tsconfig"],
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "checkJs": true,
     "module": "ESNext",
     "moduleResolution": "Bundler"
