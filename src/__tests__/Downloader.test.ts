@@ -71,11 +71,13 @@ describe('Downloader', () => {
       expect(NodeID3.write).toHaveBeenCalledOnce();
       expect(NodeID3.write).toBeCalledWith(id, expect.any(String));
     });
-    it('should return the output file', async () => {
+    it('should return the downloader information', async () => {
       const downloader = new Downloader({ getTags: false, outputDir });
       const promise = downloader.downloadSong(url);
       downloadStream.end();
-      await expect(promise).resolves.toBeTypeOf('string');
+      await expect(promise).resolves.toMatchObject({
+        outputFile: expect.any(String)
+      });
     });
   });
 });
