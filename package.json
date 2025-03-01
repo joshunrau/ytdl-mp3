@@ -92,7 +92,8 @@
       }
     },
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "ffmpeg-static"
     ]
   }
 }
