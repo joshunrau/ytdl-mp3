@@ -3,7 +3,7 @@ import readline from 'readline';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { MockedFunction } from 'vitest';
 
-import { YtdlMp3Error, isDirectory, removeParenthesizedText, userInput } from '../utils';
+import { isDirectory, removeParenthesizedText, userInput, YtdlMp3Error } from '../utils';
 
 describe('removeParenthesizedText', () => {
   it('removes content within square brackets', () => {

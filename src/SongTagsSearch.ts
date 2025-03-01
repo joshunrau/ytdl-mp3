@@ -1,6 +1,7 @@
-import axios, { type AxiosError } from 'axios';
+import axios from 'axios';
+import type { AxiosError } from 'axios';
 
-import { YtdlMp3Error, removeParenthesizedText, userInput } from './utils';
+import { removeParenthesizedText, userInput, YtdlMp3Error } from './utils';
 
 export type SearchResult = {
   artistName: string;
@@ -25,12 +26,12 @@ export type AlbumArt = {
 };
 
 export type SongTags = {
-  APIC: AlbumArt;
-  TRCK: number;
   album: string;
+  APIC: AlbumArt;
   artist: string;
   genre: string;
   title: string;
+  TRCK: number;
   year: string;
 };
 
@@ -52,17 +53,17 @@ export class SongTagsSearch {
     const artworkUrl = result.artworkUrl100.replace('100x100bb.jpg', '600x600bb.jpg');
     const albumArt = await this.fetchAlbumArt(artworkUrl);
     return {
+      album: result.collectionName,
       APIC: {
         description: 'Album Art',
         imageBuffer: albumArt,
         mime: 'image/jpeg',
         type: 3
       },
-      TRCK: result.trackNumber,
-      album: result.collectionName,
       artist: result.artistName,
       genre: result.primaryGenreName,
       title: result.trackName,
+      TRCK: result.trackNumber,
       year: result.releaseDate.substring(0, 4)
     };
   }

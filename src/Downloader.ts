@@ -6,10 +6,12 @@ import type { videoInfo as VideoInfo } from '@distube/ytdl-core';
 import NodeID3 from 'node-id3';
 
 import { FormatConverter } from './FormatConverter';
-import { type SongTags, SongTagsSearch } from './SongTagsSearch';
-import { YtdlMp3Error, isDirectory, removeParenthesizedText } from './utils';
+import { SongTagsSearch } from './SongTagsSearch';
+import { isDirectory, removeParenthesizedText, YtdlMp3Error } from './utils';
 
-export type DownloaderOptions = {
+import type { SongTags } from './SongTagsSearch';
+
+type DownloaderOptions = {
   customSearchTerm?: null | string;
   getTags?: boolean;
   outputDir?: string;
@@ -17,7 +19,7 @@ export type DownloaderOptions = {
   verifyTags?: boolean;
 };
 
-type DownlaoderItemInformation = {
+type DownloaderItemInformation = {
   album: null | string;
   artist: null | string;
   genre: null | string;
@@ -43,7 +45,7 @@ export class Downloader {
     this.customSearchTerm = customSearchTerm ?? null;
   }
 
-  async downloadSong(url: string): Promise<DownlaoderItemInformation> {
+  async downloadSong(url: string): Promise<DownloaderItemInformation> {
     if (!isDirectory(this.outputDir)) {
       throw new YtdlMp3Error(`Not a directory: ${this.outputDir}`);
     }
@@ -70,7 +72,7 @@ export class Downloader {
     });
 
     formatConverter.videoToAudio(videoData, outputFile);
-    let songTags: SongTags | null = null;
+    let songTags: null | SongTags = null;
     if (this.getTags) {
       songTags = await songTagsSearch.search(this.verifyTags);
       NodeID3.write(songTags, outputFile);
@@ -118,3 +120,5 @@ export class Downloader {
     return path.join(this.outputDir, baseFileName + '.mp3');
   }
 }
+
+export type { DownloaderOptions };
