@@ -1,8 +1,9 @@
 {
-  "extends": ["@joshunrau/tsconfig"],
-  "include": ["src/**/*"],
+  "extends": ["@douglasneuroinformatics/tsconfig"],
   "compilerOptions": {
+    "checkJs": true,
     "module": "ESNext",
     "moduleResolution": "Bundler"
-  }
+  },
+  "include": ["eslint.config.js", "tsup.config.js", "vitest.config.js", "src/**/*"]
 }

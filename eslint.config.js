@@ -1,4 +1,4 @@
-import { config } from '@joshunrau/eslint-config';
+import { config } from '@douglasneuroinformatics/eslint-config';
 
 export default config({
   env: {
@@ -6,7 +6,6 @@ export default config({
     es2021: true,
     node: true
   },
-  exclude: ['dist/*'],
   typescript: {
     enabled: true
   }

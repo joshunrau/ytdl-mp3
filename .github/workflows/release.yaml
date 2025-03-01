@@ -12,8 +12,10 @@ jobs:
       issues: write
       pull-requests: write
       id-token: write
-    uses: joshunrau/semantic-release/.github/workflows/release.yaml@main
+    uses: DouglasNeuroinformatics/semantic-release/.github/workflows/release.yaml@main
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     with:
-      build-command: pnpm build # optional
+      build-command: pnpm build
+      lint-command: pnpm lint
+      test-command: pnpm test

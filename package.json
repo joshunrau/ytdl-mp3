@@ -2,7 +2,7 @@
   "name": "ytdl-mp3",
   "type": "module",
   "version": "5.2.1",
-  "packageManager": "pnpm@9.3.0",
+  "packageManager": "pnpm@10.5.2",
   "description": "An NPM package to facilitate downloading music from YouTube, including automatic retrieval of ID3 tags and album art via the iTunes public API.",
   "author": "Joshua Unrau",
   "license": "MIT",
@@ -53,38 +53,36 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.16.0",
-    "axios": "^1.7.9",
-    "commander": "^12.1.0",
+    "@distube/ytdl-core": "^4.16.4",
+    "axios": "^1.8.1",
+    "commander": "^13.1.0",
     "ffmpeg-static": "^5.2.0",
     "node-id3": "0.2.5"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.4.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "@joshunrau/eslint-config": "^4.3.3",
-    "@joshunrau/prettier-config": "^0.4.0",
-    "@joshunrau/semantic-release": "^0.1.4",
-    "@joshunrau/tsconfig": "^0.0.4",
+    "@douglasneuroinformatics/eslint-config": "^5.3.1",
+    "@douglasneuroinformatics/prettier-config": "^0.0.2",
+    "@douglasneuroinformatics/semantic-release": "^0.2.1",
+    "@douglasneuroinformatics/tsconfig": "^1.0.2",
     "@types/ffmpeg-static": "^3.0.3",
-    "@types/node": "^20.14.5",
-    "@vitest/coverage-v8": "^2.0.5",
-    "eslint": "^8.57.0",
-    "husky": "^9.1.5",
-    "prettier": "^3.3.3",
-    "tsup": "^8.2.4",
-    "typescript": "~5.5.4",
-    "vitest": "^2.0.5"
+    "@types/node": "^22.x",
+    "@vitest/coverage-v8": "^3.0.7",
+    "eslint": "^9.21.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.5.2",
+    "tsup": "^8.4.0",
+    "typescript": "5.6.x",
+    "vitest": "^3.0.7"
   },
-  "prettier": "@joshunrau/prettier-config",
   "commitlint": {
     "extends": [
-      "@commitlint/config-conventional"
+      "@douglasneuroinformatics/semantic-release/commitlint-config"
     ]
   },
+  "prettier": "@douglasneuroinformatics/prettier-config",
   "release": {
     "extends": [
-      "@joshunrau/semantic-release"
+      "@douglasneuroinformatics/semantic-release"
     ]
   },
   "pnpm": {
@@ -92,6 +90,9 @@
       "allowedVersions": {
         "undici": "7.x"
       }
-    }
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
